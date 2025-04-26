@@ -1,1 +1,0 @@
-/ENPM673_turtlebot_perception_challenge/enpm673_final_proj/scripts/enpm673_final_proj_main.py

@@ -374,8 +374,8 @@
         <camera name="picam">
           <horizontal_fov>1.085595</horizontal_fov>
           <image>
-              <width>640</width>
-              <height>480</height>
+              <width>3840</width>
+              <height>2160</height>
               <format>R8G8B8</format>
           </image>
           <clip>

@@ -38,6 +38,7 @@ ament_python_install_package(enpm673_module)
 # Install python executable
 install(PROGRAMS
   scripts/enpm673_final_proj_main.py
+  scripts/horizon_line.py
   DESTINATION lib/${PROJECT_NAME}
   )
 
