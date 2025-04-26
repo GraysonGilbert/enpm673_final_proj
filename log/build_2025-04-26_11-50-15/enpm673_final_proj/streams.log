@@ -1,0 +1,185 @@
+[0.007s] Invoking command in '/ENPM673_turtlebot_perception_challenge/build/enpm673_final_proj': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /ENPM673_turtlebot_perception_challenge/enpm673_final_proj -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj
+[0.047s] -- The C compiler identification is GNU 11.4.0
+[0.080s] -- The CXX compiler identification is GNU 11.4.0
+[0.085s] -- Detecting C compiler ABI info
+[0.132s] -- Detecting C compiler ABI info - done
+[0.137s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.137s] -- Detecting C compile features
+[0.137s] -- Detecting C compile features - done
+[0.140s] -- Detecting CXX compiler ABI info
+[0.190s] -- Detecting CXX compiler ABI info - done
+[0.195s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.195s] -- Detecting CXX compile features
+[0.196s] -- Detecting CXX compile features - done
+[0.197s] -- Found ament_cmake: 1.3.11 (/opt/ros/humble/share/ament_cmake/cmake)
+[0.292s] -- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+[0.332s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[0.349s] -- Found rclcpp: 16.0.12 (/opt/ros/humble/share/rclcpp/cmake)
+[0.377s] -- Found rosidl_generator_c: 3.1.6 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[0.380s] -- Found rosidl_adapter: 3.1.6 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[0.386s] -- Found rosidl_generator_cpp: 3.1.6 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[0.394s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.404s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.434s] -- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[0.435s] -- Found rmw_fastrtps_cpp: 6.2.7 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+[0.506s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.2")  
+[0.528s] -- Found FastRTPS: /opt/ros/humble/include  
+[0.561s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[0.566s] -- Looking for pthread.h
+[0.615s] -- Looking for pthread.h - found
+[0.615s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[0.657s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+[0.658s] -- Found Threads: TRUE  
+[0.691s] -- Found rclpy: 3.3.16 (/opt/ros/humble/share/rclpy/cmake)
+[0.696s] [33mCMake Warning (dev) at /usr/share/cmake-3.22/Modules/FindPackageHandleStandardArgs.cmake:438 (message):
+[0.696s]   The package name passed to `find_package_handle_standard_args` (PkgConfig)
+[0.696s]   does not match the name of the calling package (gazebo).  This can lead to
+[0.696s]   problems in calling code that expects `find_package` result variables
+[0.696s]   (e.g., `_FOUND`) to follow a certain pattern.
+[0.696s] Call Stack (most recent call first):
+[0.696s]   /usr/share/cmake-3.22/Modules/FindPkgConfig.cmake:99 (find_package_handle_standard_args)
+[0.696s]   /usr/lib/x86_64-linux-gnu/cmake/gazebo/gazebo-config.cmake:72 (include)
+[0.696s]   CMakeLists.txt:13 (find_package)
+[0.696s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[0.696s] -- Found PkgConfig: /usr/bin/pkg-config (found version "0.29.2") 
+[0.696s] [0m
+[0.696s] -- Checking for module 'bullet>=2.82'
+[0.707s] --   Found bullet, version 3.05
+[0.796s] -- Found fcl: /usr/include (found suitable version "0.7.0", minimum required is "0.5.0") 
+[0.836s] -- Found assimp: /usr/include (found version "5.2.0") 
+[0.849s] -- Found DART: /usr/include (Required is at least version "6.6") found components: dart 
+[0.866s] -- Found Boost: /usr/lib/x86_64-linux-gnu/cmake/Boost-1.74.0/BoostConfig.cmake (found suitable version "1.74.0", minimum required is "1.40.0") found components: thread system filesystem program_options regex iostreams date_time 
+[0.875s] -- Found Protobuf: /usr/lib/x86_64-linux-gnu/libprotobuf.so (found version "3.12.4") 
+[0.878s] -- Looking for ignition-math6 -- found version 6.15.1
+[0.881s] -- Searching for dependencies of ignition-math6
+[0.882s] -- Looking for OGRE...
+[0.882s] -- OGRE_PREFIX_WATCH changed.
+[0.886s] -- Checking for module 'OGRE'
+[0.896s] --   Found OGRE, version 1.9.0
+[0.922s] -- Found Ogre Ghadamon (1.9.0)
+[0.924s] -- Found OGRE: optimized;/usr/lib/x86_64-linux-gnu/libOgreMain.so;debug;/usr/lib/x86_64-linux-gnu/libOgreMain.so
+[0.930s] -- Looking for OGRE_Paging...
+[0.932s] -- Found OGRE_Paging: optimized;/usr/lib/x86_64-linux-gnu/libOgrePaging.so;debug;/usr/lib/x86_64-linux-gnu/libOgrePaging.so
+[0.932s] -- Looking for OGRE_Terrain...
+[0.934s] -- Found OGRE_Terrain: optimized;/usr/lib/x86_64-linux-gnu/libOgreTerrain.so;debug;/usr/lib/x86_64-linux-gnu/libOgreTerrain.so
+[0.934s] -- Looking for OGRE_Property...
+[0.936s] -- Found OGRE_Property: optimized;/usr/lib/x86_64-linux-gnu/libOgreProperty.so;debug;/usr/lib/x86_64-linux-gnu/libOgreProperty.so
+[0.936s] -- Looking for OGRE_RTShaderSystem...
+[0.938s] -- Found OGRE_RTShaderSystem: optimized;/usr/lib/x86_64-linux-gnu/libOgreRTShaderSystem.so;debug;/usr/lib/x86_64-linux-gnu/libOgreRTShaderSystem.so
+[0.938s] -- Looking for OGRE_Volume...
+[0.940s] -- Found OGRE_Volume: optimized;/usr/lib/x86_64-linux-gnu/libOgreVolume.so;debug;/usr/lib/x86_64-linux-gnu/libOgreVolume.so
+[0.940s] -- Looking for OGRE_Overlay...
+[0.942s] -- Found OGRE_Overlay: optimized;/usr/lib/x86_64-linux-gnu/libOgreOverlay.so;debug;/usr/lib/x86_64-linux-gnu/libOgreOverlay.so
+[0.992s] -- Looking for ignition-math6 -- found version 6.15.1
+[0.993s] -- Looking for ignition-transport8 -- found version 8.2.1
+[0.994s] -- Searching for dependencies of ignition-transport8
+[1.011s] -- Found Protobuf: /usr/lib/x86_64-linux-gnu/libprotobuf.so (found suitable version "3.12.4", minimum required is "3") 
+[1.020s] -- Config-file not installed for ZeroMQ -- checking for pkg-config
+[1.023s] -- Checking for module 'libzmq >= 4'
+[1.033s] --   Found libzmq , version 4.3.4
+[1.062s] -- Found ZeroMQ: TRUE (Required is at least version "4") 
+[1.067s] -- Checking for module 'uuid'
+[1.075s] --   Found uuid, version 2.37.2
+[1.103s] -- Found UUID: TRUE  
+[1.104s] -- Looking for ignition-msgs5 -- found version 5.8.1
+[1.105s] -- Searching for dependencies of ignition-msgs5
+[1.123s] -- Looking for ignition-math6 -- found version 6.15.1
+[1.127s] -- Checking for module 'tinyxml2'
+[1.139s] --   Found tinyxml2, version 9.0.0
+[1.169s] -- Looking for ignition-msgs5 -- found version 5.8.1
+[1.171s] -- Looking for ignition-common3 -- found version 3.14.0
+[1.171s] -- Searching for dependencies of ignition-common3
+[1.171s] -- Looking for dlfcn.h - found
+[1.172s] -- Looking for libdl - found
+[1.173s] -- Found DL: TRUE  
+[1.181s] -- Found tinyobjloader: /usr/lib/x86_64-linux-gnu/cmake/tinyobjloader/tinyobjloader-config.cmake (found version "2.0.0") 
+[1.181s] -- Searching for <ignition-common3> component [graphics]
+[1.182s] -- Looking for ignition-common3-graphics -- found version 3.14.0
+[1.183s] -- Searching for dependencies of ignition-common3-graphics
+[1.183s] -- Looking for ignition-math6 -- found version 6.15.1
+[1.184s] -- Looking for ignition-fuel_tools4 -- found version 4.4.0
+[1.185s] -- Searching for dependencies of ignition-fuel_tools4
+[1.252s] -- Found CURL: /usr/lib/x86_64-linux-gnu/libcurl.so (found version "7.81.0")  
+[1.258s] -- Checking for module 'jsoncpp'
+[1.269s] --   Found jsoncpp, version 1.9.5
+[1.297s] -- Found JSONCPP: TRUE  
+[1.301s] -- Checking for module 'libzip'
+[1.311s] --   Found libzip, version 1.7.3
+[1.338s] -- Found ZIP: TRUE  
+[1.339s] -- Looking for ignition-common3 -- found version 3.14.0
+[1.339s] -- Looking for ignition-math6 -- found version 6.15.1
+[1.340s] -- Looking for ignition-msgs5 -- found version 5.8.1
+[1.435s] -- Configuring done
+[1.442s] -- Generating done
+[1.445s] -- Build files have been written to: /ENPM673_turtlebot_perception_challenge/build/enpm673_final_proj
+[1.453s] Invoked command in '/ENPM673_turtlebot_perception_challenge/build/enpm673_final_proj' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /ENPM673_turtlebot_perception_challenge/enpm673_final_proj -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj
+[1.454s] Invoking command in '/ENPM673_turtlebot_perception_challenge/build/enpm673_final_proj': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /ENPM673_turtlebot_perception_challenge/build/enpm673_final_proj -- -j22 -l22
+[1.491s] [ 25%] [32mBuilding CXX object CMakeFiles/animated_box.dir/src/animated_box.cpp.o[0m
+[1.493s] [ 50%] [32mBuilding CXX object CMakeFiles/cpp_enpm673_final_proj.dir/src/enpm673_final_proj.cpp.o[0m
+[1.499s] [ 50%] Built target ament_cmake_python_symlink_enpm673_module
+[1.516s] [ 75%] [32m[1mLinking CXX executable cpp_enpm673_final_proj[0m
+[1.559s] [ 75%] Built target cpp_enpm673_final_proj
+[1.653s] running egg_info
+[1.654s] creating enpm673_module.egg-info
+[1.654s] writing enpm673_module.egg-info/PKG-INFO
+[1.654s] writing dependency_links to enpm673_module.egg-info/dependency_links.txt
+[1.654s] writing top-level names to enpm673_module.egg-info/top_level.txt
+[1.654s] writing manifest file 'enpm673_module.egg-info/SOURCES.txt'
+[1.655s] reading manifest file 'enpm673_module.egg-info/SOURCES.txt'
+[1.655s] writing manifest file 'enpm673_module.egg-info/SOURCES.txt'
+[1.675s] [ 75%] Built target ament_cmake_python_build_enpm673_module_egg
+[8.505s] [100%] [32m[1mLinking CXX shared library libanimated_box.so[0m
+[8.593s] [100%] Built target animated_box
+[8.601s] Invoked command in '/ENPM673_turtlebot_perception_challenge/build/enpm673_final_proj' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /ENPM673_turtlebot_perception_challenge/build/enpm673_final_proj -- -j22 -l22
+[8.608s] Invoking command in '/ENPM673_turtlebot_perception_challenge/build/enpm673_final_proj': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /ENPM673_turtlebot_perception_challenge/build/enpm673_final_proj
+[8.612s] -- Install configuration: ""
+[8.612s] -- Execute custom install script
+[8.612s] -- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/lib/enpm673_final_proj/cpp_enpm673_final_proj
+[8.619s] -- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj/environment/pythonpath.sh
+[8.624s] -- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj/environment/pythonpath.dsv
+[8.628s] -- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/local/lib/python3.10/dist-packages/enpm673_module-0.0.0-py3.10.egg-info/PKG-INFO
+[8.632s] -- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/local/lib/python3.10/dist-packages/enpm673_module-0.0.0-py3.10.egg-info/SOURCES.txt
+[8.638s] -- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/local/lib/python3.10/dist-packages/enpm673_module-0.0.0-py3.10.egg-info/dependency_links.txt
+[8.643s] -- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/local/lib/python3.10/dist-packages/enpm673_module-0.0.0-py3.10.egg-info/top_level.txt
+[8.648s] -- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/local/lib/python3.10/dist-packages/enpm673_module/__init__.py
+[8.652s] -- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/local/lib/python3.10/dist-packages/enpm673_module/enpm673_final_proj.py
+[8.656s] -- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/lib/enpm673_final_proj/enpm673_final_proj_main.py
+[8.662s] -- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj/launch//enpm673_world.launch.py
+[8.667s] -- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/lib/enpm673_final_proj/libanimated_box.so
+[8.673s] -- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj/worlds//enpm673.world
+[8.678s] -- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj/worlds//animated_box.world
+[8.685s] -- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj//models/aruco_marker/materials/scripts/marker.material
+[8.690s] -- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj//models/aruco_marker/materials/textures/marker.png
+[8.695s] -- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj//models/aruco_marker/model.config
+[8.700s] -- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj//models/aruco_marker/model.sdf
+[8.707s] -- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj//models/checkerboard_6_8_0_03/checkerboard.sdf
+[8.711s] -- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj//models/checkerboard_6_8_0_03/model.config
+[8.715s] -- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj//models/floor_tile/model.config
+[8.719s] -- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj//models/floor_tile/model.sdf
+[8.725s] -- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj//models/lane_markings/model.config
+[8.729s] -- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj//models/lane_markings/model.sdf
+[8.733s] -- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj//models/paper_letter_size/model.config
+[8.737s] -- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj//models/paper_letter_size/model.sdf
+[8.742s] -- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj//models/textured_floor/model.config
+[8.747s] -- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj//models/textured_floor/model.sdf
+[8.751s] -- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj//models/umd_turtlebot3_waffle_pi/model.config
+[8.755s] -- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj//models/umd_turtlebot3_waffle_pi/model.sdf
+[8.761s] -- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/ament_index/resource_index/package_run_dependencies/enpm673_final_proj
+[8.766s] -- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/ament_index/resource_index/parent_prefix_path/enpm673_final_proj
+[8.771s] -- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj/environment/ament_prefix_path.sh
+[8.775s] -- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj/environment/ament_prefix_path.dsv
+[8.780s] -- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj/environment/path.sh
+[8.785s] -- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj/environment/path.dsv
+[8.790s] -- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj/local_setup.bash
+[8.795s] -- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj/local_setup.sh
+[8.799s] -- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj/local_setup.zsh
+[8.804s] -- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj/local_setup.dsv
+[8.809s] -- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj/package.dsv
+[8.814s] -- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/ament_index/resource_index/packages/enpm673_final_proj
+[8.819s] -- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj/cmake/enpm673_final_projConfig.cmake
+[8.824s] -- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj/cmake/enpm673_final_projConfig-version.cmake
+[8.829s] -- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj/package.xml
+[8.854s] Listing '/ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/local/lib/python3.10/dist-packages/enpm673_module'...
+[8.854s] Compiling '/ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/local/lib/python3.10/dist-packages/enpm673_module/__init__.py'...
+[8.854s] Compiling '/ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/local/lib/python3.10/dist-packages/enpm673_module/enpm673_final_proj.py'...
+[8.858s] Invoked command in '/ENPM673_turtlebot_perception_challenge/build/enpm673_final_proj' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /ENPM673_turtlebot_perception_challenge/build/enpm673_final_proj

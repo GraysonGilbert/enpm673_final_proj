@@ -1,0 +1,106 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-74b301a94dfd64a1fd83.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.10.2"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5
+					]
+				}
+			],
+			"name" : "",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "enpm673_final_proj",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "ament_cmake_python_build_enpm673_module_egg::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ament_cmake_python_build_enpm673_module_egg-dc82324bcbf0a08f74e8.json",
+					"name" : "ament_cmake_python_build_enpm673_module_egg",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ament_cmake_python_symlink_enpm673_module::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ament_cmake_python_symlink_enpm673_module-32769c426f09313f6a37.json",
+					"name" : "ament_cmake_python_symlink_enpm673_module",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "animated_box::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-animated_box-2e570dce36c70999d7d7.json",
+					"name" : "animated_box",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "cpp_enpm673_final_proj::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-cpp_enpm673_final_proj-ca850066056d583b8f65.json",
+					"name" : "cpp_enpm673_final_proj",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "enpm673_final_proj_uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-enpm673_final_proj_uninstall-bfc7c2464dc35216036c.json",
+					"name" : "enpm673_final_proj_uninstall",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-uninstall-1113d8aa91b57d1d4e7f.json",
+					"name" : "uninstall",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/ENPM673_turtlebot_perception_challenge/build/enpm673_final_proj",
+		"source" : "/ENPM673_turtlebot_perception_challenge/enpm673_final_proj"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 3
+	}
+}

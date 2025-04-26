@@ -1,0 +1,281 @@
+[0.000000] (-) TimerEvent: {}
+[0.000198] (enpm673_final_proj) JobQueued: {'identifier': 'enpm673_final_proj', 'dependencies': OrderedDict()}
+[0.000251] (enpm673_final_proj) JobStarted: {'identifier': 'enpm673_final_proj'}
+[0.005181] (enpm673_final_proj) JobProgress: {'identifier': 'enpm673_final_proj', 'progress': 'cmake'}
+[0.005535] (enpm673_final_proj) Command: {'cmd': ['/usr/bin/cmake', '/ENPM673_turtlebot_perception_challenge/enpm673_final_proj', '-DAMENT_CMAKE_SYMLINK_INSTALL=1', '-DCMAKE_INSTALL_PREFIX=/ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj'], 'cwd': '/ENPM673_turtlebot_perception_challenge/build/enpm673_final_proj', 'env': OrderedDict([('NV_CUDA_COMPAT_PACKAGE', 'cuda-compat-12-4'), ('HOSTNAME', 'grayson-XPS'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib:/usr/local/nvidia/lib:/usr/local/nvidia/lib64'), ('HOME', '/root'), ('OLDPWD', '/'), ('ROS_PYTHON_VERSION', '3'), ('CUDA_VERSION', '12.4.1'), ('ROS_DISTRO', 'humble'), ('NVIDIA_REQUIRE_CUDA', 'cuda>=12.4 brand=tesla,driver>=470,driver<471 brand=unknown,driver>=470,driver<471 brand=nvidia,driver>=470,driver<471 brand=nvidiartx,driver>=470,driver<471 brand=geforce,driver>=470,driver<471 brand=geforcertx,driver>=470,driver<471 brand=quadro,driver>=470,driver<471 brand=quadrortx,driver>=470,driver<471 brand=titan,driver>=470,driver<471 brand=titanrtx,driver>=470,driver<471 brand=tesla,driver>=525,driver<526 brand=unknown,driver>=525,driver<526 brand=nvidia,driver>=525,driver<526 brand=nvidiartx,driver>=525,driver<526 brand=geforce,driver>=525,driver<526 brand=geforcertx,driver>=525,driver<526 brand=quadro,driver>=525,driver<526 brand=quadrortx,driver>=525,driver<526 brand=titan,driver>=525,driver<526 brand=titanrtx,driver>=525,driver<526 brand=tesla,driver>=535,driver<536 brand=unknown,driver>=535,driver<536 brand=nvidia,driver>=535,driver<536 brand=nvidiartx,driver>=535,driver<536 brand=geforce,driver>=535,driver<536 brand=geforcertx,driver>=535,driver<536 brand=quadro,driver>=535,driver<536 brand=quadrortx,driver>=535,driver<536 brand=titan,driver>=535,driver<536 brand=titanrtx,driver>=535,driver<536'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('NVIDIA_DRIVER_CAPABILITIES', 'all'), ('TERM', 'xterm'), ('NV_CUDA_CUDART_VERSION', '12.4.127-1'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/local/nvidia/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'), ('NVARCH', 'x86_64'), ('DISPLAY', ':1'), ('LANG', 'en_US.UTF-8'), ('XAUTHORITY', '/run/user/1000/gdm/Xauthority'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('PWD', '/ENPM673_turtlebot_perception_challenge/build/enpm673_final_proj'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('NVIDIA_VISIBLE_DEVICES', 'all'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[0.047103] (enpm673_final_proj) StdoutLine: {'line': b'-- The C compiler identification is GNU 11.4.0\n'}
+[0.080654] (enpm673_final_proj) StdoutLine: {'line': b'-- The CXX compiler identification is GNU 11.4.0\n'}
+[0.084808] (enpm673_final_proj) StdoutLine: {'line': b'-- Detecting C compiler ABI info\n'}
+[0.099390] (-) TimerEvent: {}
+[0.131755] (enpm673_final_proj) StdoutLine: {'line': b'-- Detecting C compiler ABI info - done\n'}
+[0.137047] (enpm673_final_proj) StdoutLine: {'line': b'-- Check for working C compiler: /usr/bin/cc - skipped\n'}
+[0.137275] (enpm673_final_proj) StdoutLine: {'line': b'-- Detecting C compile features\n'}
+[0.137578] (enpm673_final_proj) StdoutLine: {'line': b'-- Detecting C compile features - done\n'}
+[0.139871] (enpm673_final_proj) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info\n'}
+[0.189873] (enpm673_final_proj) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info - done\n'}
+[0.195194] (enpm673_final_proj) StdoutLine: {'line': b'-- Check for working CXX compiler: /usr/bin/c++ - skipped\n'}
+[0.195380] (enpm673_final_proj) StdoutLine: {'line': b'-- Detecting CXX compile features\n'}
+[0.195745] (enpm673_final_proj) StdoutLine: {'line': b'-- Detecting CXX compile features - done\n'}
+[0.197682] (enpm673_final_proj) StdoutLine: {'line': b'-- Found ament_cmake: 1.3.11 (/opt/ros/humble/share/ament_cmake/cmake)\n'}
+[0.199451] (-) TimerEvent: {}
+[0.292602] (enpm673_final_proj) StdoutLine: {'line': b'-- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter \n'}
+[0.299547] (-) TimerEvent: {}
+[0.332372] (enpm673_final_proj) StdoutLine: {'line': b'-- Override CMake install command with custom implementation using symlinks instead of copying resources\n'}
+[0.348887] (enpm673_final_proj) StdoutLine: {'line': b'-- Found rclcpp: 16.0.12 (/opt/ros/humble/share/rclcpp/cmake)\n'}
+[0.377313] (enpm673_final_proj) StdoutLine: {'line': b'-- Found rosidl_generator_c: 3.1.6 (/opt/ros/humble/share/rosidl_generator_c/cmake)\n'}
+[0.380432] (enpm673_final_proj) StdoutLine: {'line': b'-- Found rosidl_adapter: 3.1.6 (/opt/ros/humble/share/rosidl_adapter/cmake)\n'}
+[0.385745] (enpm673_final_proj) StdoutLine: {'line': b'-- Found rosidl_generator_cpp: 3.1.6 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)\n'}
+[0.393763] (enpm673_final_proj) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[0.399633] (-) TimerEvent: {}
+[0.404478] (enpm673_final_proj) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[0.433836] (enpm673_final_proj) StdoutLine: {'line': b'-- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)\n'}
+[0.435417] (enpm673_final_proj) StdoutLine: {'line': b'-- Found rmw_fastrtps_cpp: 6.2.7 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)\n'}
+[0.499751] (-) TimerEvent: {}
+[0.506238] (enpm673_final_proj) StdoutLine: {'line': b'-- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.2")  \n'}
+[0.528219] (enpm673_final_proj) StdoutLine: {'line': b'-- Found FastRTPS: /opt/ros/humble/include  \n'}
+[0.561560] (enpm673_final_proj) StdoutLine: {'line': b"-- Using RMW implementation 'rmw_fastrtps_cpp' as default\n"}
+[0.566170] (enpm673_final_proj) StdoutLine: {'line': b'-- Looking for pthread.h\n'}
+[0.599875] (-) TimerEvent: {}
+[0.614764] (enpm673_final_proj) StdoutLine: {'line': b'-- Looking for pthread.h - found\n'}
+[0.614906] (enpm673_final_proj) StdoutLine: {'line': b'-- Performing Test CMAKE_HAVE_LIBC_PTHREAD\n'}
+[0.657509] (enpm673_final_proj) StdoutLine: {'line': b'-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success\n'}
+[0.658124] (enpm673_final_proj) StdoutLine: {'line': b'-- Found Threads: TRUE  \n'}
+[0.691129] (enpm673_final_proj) StdoutLine: {'line': b'-- Found rclpy: 3.3.16 (/opt/ros/humble/share/rclpy/cmake)\n'}
+[0.695788] (enpm673_final_proj) StderrLine: {'line': b'\x1b[33mCMake Warning (dev) at /usr/share/cmake-3.22/Modules/FindPackageHandleStandardArgs.cmake:438 (message):\n'}
+[0.695872] (enpm673_final_proj) StderrLine: {'line': b'  The package name passed to `find_package_handle_standard_args` (PkgConfig)\n'}
+[0.695902] (enpm673_final_proj) StderrLine: {'line': b'  does not match the name of the calling package (gazebo).  This can lead to\n'}
+[0.695928] (enpm673_final_proj) StderrLine: {'line': b'  problems in calling code that expects `find_package` result variables\n'}
+[0.695952] (enpm673_final_proj) StderrLine: {'line': b'  (e.g., `_FOUND`) to follow a certain pattern.\n'}
+[0.695975] (enpm673_final_proj) StderrLine: {'line': b'Call Stack (most recent call first):\n'}
+[0.695999] (enpm673_final_proj) StderrLine: {'line': b'  /usr/share/cmake-3.22/Modules/FindPkgConfig.cmake:99 (find_package_handle_standard_args)\n'}
+[0.696023] (enpm673_final_proj) StderrLine: {'line': b'  /usr/lib/x86_64-linux-gnu/cmake/gazebo/gazebo-config.cmake:72 (include)\n'}
+[0.696047] (enpm673_final_proj) StderrLine: {'line': b'  CMakeLists.txt:13 (find_package)\n'}
+[0.696072] (enpm673_final_proj) StderrLine: {'line': b'This warning is for project developers.  Use -Wno-dev to suppress it.\n'}
+[0.696095] (enpm673_final_proj) StdoutLine: {'line': b'-- Found PkgConfig: /usr/bin/pkg-config (found version "0.29.2") \n'}
+[0.696122] (enpm673_final_proj) StderrLine: {'line': b'\x1b[0m\n'}
+[0.696488] (enpm673_final_proj) StdoutLine: {'line': b"-- Checking for module 'bullet>=2.82'\n"}
+[0.699920] (-) TimerEvent: {}
+[0.706955] (enpm673_final_proj) StdoutLine: {'line': b'--   Found bullet, version 3.05\n'}
+[0.796447] (enpm673_final_proj) StdoutLine: {'line': b'-- Found fcl: /usr/include (found suitable version "0.7.0", minimum required is "0.5.0") \n'}
+[0.800011] (-) TimerEvent: {}
+[0.836419] (enpm673_final_proj) StdoutLine: {'line': b'-- Found assimp: /usr/include (found version "5.2.0") \n'}
+[0.849664] (enpm673_final_proj) StdoutLine: {'line': b'-- Found DART: /usr/include (Required is at least version "6.6") found components: dart \n'}
+[0.866483] (enpm673_final_proj) StdoutLine: {'line': b'-- Found Boost: /usr/lib/x86_64-linux-gnu/cmake/Boost-1.74.0/BoostConfig.cmake (found suitable version "1.74.0", minimum required is "1.40.0") found components: thread system filesystem program_options regex iostreams date_time \n'}
+[0.875043] (enpm673_final_proj) StdoutLine: {'line': b'-- Found Protobuf: /usr/lib/x86_64-linux-gnu/libprotobuf.so (found version "3.12.4") \n'}
+[0.878000] (enpm673_final_proj) StdoutLine: {'line': b'-- Looking for ignition-math6 -- found version 6.15.1\n'}
+[0.881523] (enpm673_final_proj) StdoutLine: {'line': b'-- Searching for dependencies of ignition-math6\n'}
+[0.882419] (enpm673_final_proj) StdoutLine: {'line': b'-- Looking for OGRE...\n'}
+[0.882592] (enpm673_final_proj) StdoutLine: {'line': b'-- OGRE_PREFIX_WATCH changed.\n'}
+[0.886522] (enpm673_final_proj) StdoutLine: {'line': b"-- Checking for module 'OGRE'\n"}
+[0.896467] (enpm673_final_proj) StdoutLine: {'line': b'--   Found OGRE, version 1.9.0\n'}
+[0.900074] (-) TimerEvent: {}
+[0.921757] (enpm673_final_proj) StdoutLine: {'line': b'-- Found Ogre Ghadamon (1.9.0)\n'}
+[0.924597] (enpm673_final_proj) StdoutLine: {'line': b'-- Found OGRE: optimized;/usr/lib/x86_64-linux-gnu/libOgreMain.so;debug;/usr/lib/x86_64-linux-gnu/libOgreMain.so\n'}
+[0.930695] (enpm673_final_proj) StdoutLine: {'line': b'-- Looking for OGRE_Paging...\n'}
+[0.932527] (enpm673_final_proj) StdoutLine: {'line': b'-- Found OGRE_Paging: optimized;/usr/lib/x86_64-linux-gnu/libOgrePaging.so;debug;/usr/lib/x86_64-linux-gnu/libOgrePaging.so\n'}
+[0.932594] (enpm673_final_proj) StdoutLine: {'line': b'-- Looking for OGRE_Terrain...\n'}
+[0.934415] (enpm673_final_proj) StdoutLine: {'line': b'-- Found OGRE_Terrain: optimized;/usr/lib/x86_64-linux-gnu/libOgreTerrain.so;debug;/usr/lib/x86_64-linux-gnu/libOgreTerrain.so\n'}
+[0.934474] (enpm673_final_proj) StdoutLine: {'line': b'-- Looking for OGRE_Property...\n'}
+[0.936358] (enpm673_final_proj) StdoutLine: {'line': b'-- Found OGRE_Property: optimized;/usr/lib/x86_64-linux-gnu/libOgreProperty.so;debug;/usr/lib/x86_64-linux-gnu/libOgreProperty.so\n'}
+[0.936425] (enpm673_final_proj) StdoutLine: {'line': b'-- Looking for OGRE_RTShaderSystem...\n'}
+[0.938439] (enpm673_final_proj) StdoutLine: {'line': b'-- Found OGRE_RTShaderSystem: optimized;/usr/lib/x86_64-linux-gnu/libOgreRTShaderSystem.so;debug;/usr/lib/x86_64-linux-gnu/libOgreRTShaderSystem.so\n'}
+[0.938498] (enpm673_final_proj) StdoutLine: {'line': b'-- Looking for OGRE_Volume...\n'}
+[0.940606] (enpm673_final_proj) StdoutLine: {'line': b'-- Found OGRE_Volume: optimized;/usr/lib/x86_64-linux-gnu/libOgreVolume.so;debug;/usr/lib/x86_64-linux-gnu/libOgreVolume.so\n'}
+[0.940663] (enpm673_final_proj) StdoutLine: {'line': b'-- Looking for OGRE_Overlay...\n'}
+[0.942579] (enpm673_final_proj) StdoutLine: {'line': b'-- Found OGRE_Overlay: optimized;/usr/lib/x86_64-linux-gnu/libOgreOverlay.so;debug;/usr/lib/x86_64-linux-gnu/libOgreOverlay.so\n'}
+[0.992139] (enpm673_final_proj) StdoutLine: {'line': b'-- Looking for ignition-math6 -- found version 6.15.1\n'}
+[0.993554] (enpm673_final_proj) StdoutLine: {'line': b'-- Looking for ignition-transport8 -- found version 8.2.1\n'}
+[0.993829] (enpm673_final_proj) StdoutLine: {'line': b'-- Searching for dependencies of ignition-transport8\n'}
+[1.000159] (-) TimerEvent: {}
+[1.011081] (enpm673_final_proj) StdoutLine: {'line': b'-- Found Protobuf: /usr/lib/x86_64-linux-gnu/libprotobuf.so (found suitable version "3.12.4", minimum required is "3") \n'}
+[1.020638] (enpm673_final_proj) StdoutLine: {'line': b'-- Config-file not installed for ZeroMQ -- checking for pkg-config\n'}
+[1.023507] (enpm673_final_proj) StdoutLine: {'line': b"-- Checking for module 'libzmq >= 4'\n"}
+[1.032865] (enpm673_final_proj) StdoutLine: {'line': b'--   Found libzmq , version 4.3.4\n'}
+[1.062540] (enpm673_final_proj) StdoutLine: {'line': b'-- Found ZeroMQ: TRUE (Required is at least version "4") \n'}
+[1.066980] (enpm673_final_proj) StdoutLine: {'line': b"-- Checking for module 'uuid'\n"}
+[1.075609] (enpm673_final_proj) StdoutLine: {'line': b'--   Found uuid, version 2.37.2\n'}
+[1.100271] (-) TimerEvent: {}
+[1.103366] (enpm673_final_proj) StdoutLine: {'line': b'-- Found UUID: TRUE  \n'}
+[1.104594] (enpm673_final_proj) StdoutLine: {'line': b'-- Looking for ignition-msgs5 -- found version 5.8.1\n'}
+[1.104866] (enpm673_final_proj) StdoutLine: {'line': b'-- Searching for dependencies of ignition-msgs5\n'}
+[1.123389] (enpm673_final_proj) StdoutLine: {'line': b'-- Looking for ignition-math6 -- found version 6.15.1\n'}
+[1.127606] (enpm673_final_proj) StdoutLine: {'line': b"-- Checking for module 'tinyxml2'\n"}
+[1.139389] (enpm673_final_proj) StdoutLine: {'line': b'--   Found tinyxml2, version 9.0.0\n'}
+[1.169512] (enpm673_final_proj) StdoutLine: {'line': b'-- Looking for ignition-msgs5 -- found version 5.8.1\n'}
+[1.170975] (enpm673_final_proj) StdoutLine: {'line': b'-- Looking for ignition-common3 -- found version 3.14.0\n'}
+[1.171220] (enpm673_final_proj) StdoutLine: {'line': b'-- Searching for dependencies of ignition-common3\n'}
+[1.171410] (enpm673_final_proj) StdoutLine: {'line': b'-- Looking for dlfcn.h - found\n'}
+[1.171865] (enpm673_final_proj) StdoutLine: {'line': b'-- Looking for libdl - found\n'}
+[1.172736] (enpm673_final_proj) StdoutLine: {'line': b'-- Found DL: TRUE  \n'}
+[1.180992] (enpm673_final_proj) StdoutLine: {'line': b'-- Found tinyobjloader: /usr/lib/x86_64-linux-gnu/cmake/tinyobjloader/tinyobjloader-config.cmake (found version "2.0.0") \n'}
+[1.181289] (enpm673_final_proj) StdoutLine: {'line': b'-- Searching for <ignition-common3> component [graphics]\n'}
+[1.182509] (enpm673_final_proj) StdoutLine: {'line': b'-- Looking for ignition-common3-graphics -- found version 3.14.0\n'}
+[1.182795] (enpm673_final_proj) StdoutLine: {'line': b'-- Searching for dependencies of ignition-common3-graphics\n'}
+[1.183017] (enpm673_final_proj) StdoutLine: {'line': b'-- Looking for ignition-math6 -- found version 6.15.1\n'}
+[1.184648] (enpm673_final_proj) StdoutLine: {'line': b'-- Looking for ignition-fuel_tools4 -- found version 4.4.0\n'}
+[1.184911] (enpm673_final_proj) StdoutLine: {'line': b'-- Searching for dependencies of ignition-fuel_tools4\n'}
+[1.200352] (-) TimerEvent: {}
+[1.252007] (enpm673_final_proj) StdoutLine: {'line': b'-- Found CURL: /usr/lib/x86_64-linux-gnu/libcurl.so (found version "7.81.0")  \n'}
+[1.258148] (enpm673_final_proj) StdoutLine: {'line': b"-- Checking for module 'jsoncpp'\n"}
+[1.268850] (enpm673_final_proj) StdoutLine: {'line': b'--   Found jsoncpp, version 1.9.5\n'}
+[1.296967] (enpm673_final_proj) StdoutLine: {'line': b'-- Found JSONCPP: TRUE  \n'}
+[1.300434] (-) TimerEvent: {}
+[1.301301] (enpm673_final_proj) StdoutLine: {'line': b"-- Checking for module 'libzip'\n"}
+[1.311403] (enpm673_final_proj) StdoutLine: {'line': b'--   Found libzip, version 1.7.3\n'}
+[1.338560] (enpm673_final_proj) StdoutLine: {'line': b'-- Found ZIP: TRUE  \n'}
+[1.338982] (enpm673_final_proj) StdoutLine: {'line': b'-- Looking for ignition-common3 -- found version 3.14.0\n'}
+[1.339378] (enpm673_final_proj) StdoutLine: {'line': b'-- Looking for ignition-math6 -- found version 6.15.1\n'}
+[1.339771] (enpm673_final_proj) StdoutLine: {'line': b'-- Looking for ignition-msgs5 -- found version 5.8.1\n'}
+[1.400531] (-) TimerEvent: {}
+[1.435636] (enpm673_final_proj) StdoutLine: {'line': b'-- Configuring done\n'}
+[1.442522] (enpm673_final_proj) StdoutLine: {'line': b'-- Generating done\n'}
+[1.445428] (enpm673_final_proj) StdoutLine: {'line': b'-- Build files have been written to: /ENPM673_turtlebot_perception_challenge/build/enpm673_final_proj\n'}
+[1.452793] (enpm673_final_proj) CommandEnded: {'returncode': 0}
+[1.453189] (enpm673_final_proj) JobProgress: {'identifier': 'enpm673_final_proj', 'progress': 'build'}
+[1.453758] (enpm673_final_proj) Command: {'cmd': ['/usr/bin/cmake', '--build', '/ENPM673_turtlebot_perception_challenge/build/enpm673_final_proj', '--', '-j22', '-l22'], 'cwd': '/ENPM673_turtlebot_perception_challenge/build/enpm673_final_proj', 'env': OrderedDict([('NV_CUDA_COMPAT_PACKAGE', 'cuda-compat-12-4'), ('HOSTNAME', 'grayson-XPS'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib:/usr/local/nvidia/lib:/usr/local/nvidia/lib64'), ('HOME', '/root'), ('OLDPWD', '/'), ('ROS_PYTHON_VERSION', '3'), ('CUDA_VERSION', '12.4.1'), ('ROS_DISTRO', 'humble'), ('NVIDIA_REQUIRE_CUDA', 'cuda>=12.4 brand=tesla,driver>=470,driver<471 brand=unknown,driver>=470,driver<471 brand=nvidia,driver>=470,driver<471 brand=nvidiartx,driver>=470,driver<471 brand=geforce,driver>=470,driver<471 brand=geforcertx,driver>=470,driver<471 brand=quadro,driver>=470,driver<471 brand=quadrortx,driver>=470,driver<471 brand=titan,driver>=470,driver<471 brand=titanrtx,driver>=470,driver<471 brand=tesla,driver>=525,driver<526 brand=unknown,driver>=525,driver<526 brand=nvidia,driver>=525,driver<526 brand=nvidiartx,driver>=525,driver<526 brand=geforce,driver>=525,driver<526 brand=geforcertx,driver>=525,driver<526 brand=quadro,driver>=525,driver<526 brand=quadrortx,driver>=525,driver<526 brand=titan,driver>=525,driver<526 brand=titanrtx,driver>=525,driver<526 brand=tesla,driver>=535,driver<536 brand=unknown,driver>=535,driver<536 brand=nvidia,driver>=535,driver<536 brand=nvidiartx,driver>=535,driver<536 brand=geforce,driver>=535,driver<536 brand=geforcertx,driver>=535,driver<536 brand=quadro,driver>=535,driver<536 brand=quadrortx,driver>=535,driver<536 brand=titan,driver>=535,driver<536 brand=titanrtx,driver>=535,driver<536'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('NVIDIA_DRIVER_CAPABILITIES', 'all'), ('TERM', 'xterm'), ('NV_CUDA_CUDART_VERSION', '12.4.127-1'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/local/nvidia/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'), ('NVARCH', 'x86_64'), ('DISPLAY', ':1'), ('LANG', 'en_US.UTF-8'), ('XAUTHORITY', '/run/user/1000/gdm/Xauthority'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('PWD', '/ENPM673_turtlebot_perception_challenge/build/enpm673_final_proj'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('NVIDIA_VISIBLE_DEVICES', 'all'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[1.491203] (enpm673_final_proj) StdoutLine: {'line': b'[ 25%] \x1b[32mBuilding CXX object CMakeFiles/animated_box.dir/src/animated_box.cpp.o\x1b[0m\n'}
+[1.493516] (enpm673_final_proj) StdoutLine: {'line': b'[ 50%] \x1b[32mBuilding CXX object CMakeFiles/cpp_enpm673_final_proj.dir/src/enpm673_final_proj.cpp.o\x1b[0m\n'}
+[1.499300] (enpm673_final_proj) StdoutLine: {'line': b'[ 50%] Built target ament_cmake_python_symlink_enpm673_module\n'}
+[1.500619] (-) TimerEvent: {}
+[1.515812] (enpm673_final_proj) StdoutLine: {'line': b'[ 75%] \x1b[32m\x1b[1mLinking CXX executable cpp_enpm673_final_proj\x1b[0m\n'}
+[1.559246] (enpm673_final_proj) StdoutLine: {'line': b'[ 75%] Built target cpp_enpm673_final_proj\n'}
+[1.600728] (-) TimerEvent: {}
+[1.653451] (enpm673_final_proj) StdoutLine: {'line': b'running egg_info\n'}
+[1.653963] (enpm673_final_proj) StdoutLine: {'line': b'creating enpm673_module.egg-info\n'}
+[1.654101] (enpm673_final_proj) StdoutLine: {'line': b'writing enpm673_module.egg-info/PKG-INFO\n'}
+[1.654189] (enpm673_final_proj) StdoutLine: {'line': b'writing dependency_links to enpm673_module.egg-info/dependency_links.txt\n'}
+[1.654436] (enpm673_final_proj) StdoutLine: {'line': b'writing top-level names to enpm673_module.egg-info/top_level.txt\n'}
+[1.654579] (enpm673_final_proj) StdoutLine: {'line': b"writing manifest file 'enpm673_module.egg-info/SOURCES.txt'\n"}
+[1.655579] (enpm673_final_proj) StdoutLine: {'line': b"reading manifest file 'enpm673_module.egg-info/SOURCES.txt'\n"}
+[1.655734] (enpm673_final_proj) StdoutLine: {'line': b"writing manifest file 'enpm673_module.egg-info/SOURCES.txt'\n"}
+[1.675628] (enpm673_final_proj) StdoutLine: {'line': b'[ 75%] Built target ament_cmake_python_build_enpm673_module_egg\n'}
+[1.700800] (-) TimerEvent: {}
+[1.801026] (-) TimerEvent: {}
+[1.901336] (-) TimerEvent: {}
+[2.001627] (-) TimerEvent: {}
+[2.101959] (-) TimerEvent: {}
+[2.202227] (-) TimerEvent: {}
+[2.302502] (-) TimerEvent: {}
+[2.402973] (-) TimerEvent: {}
+[2.503316] (-) TimerEvent: {}
+[2.603709] (-) TimerEvent: {}
+[2.704028] (-) TimerEvent: {}
+[2.804318] (-) TimerEvent: {}
+[2.904642] (-) TimerEvent: {}
+[3.004931] (-) TimerEvent: {}
+[3.105262] (-) TimerEvent: {}
+[3.205649] (-) TimerEvent: {}
+[3.305988] (-) TimerEvent: {}
+[3.406328] (-) TimerEvent: {}
+[3.506688] (-) TimerEvent: {}
+[3.607081] (-) TimerEvent: {}
+[3.707405] (-) TimerEvent: {}
+[3.807649] (-) TimerEvent: {}
+[3.907953] (-) TimerEvent: {}
+[4.008257] (-) TimerEvent: {}
+[4.108602] (-) TimerEvent: {}
+[4.208942] (-) TimerEvent: {}
+[4.309280] (-) TimerEvent: {}
+[4.409626] (-) TimerEvent: {}
+[4.510046] (-) TimerEvent: {}
+[4.610377] (-) TimerEvent: {}
+[4.710692] (-) TimerEvent: {}
+[4.811034] (-) TimerEvent: {}
+[4.911363] (-) TimerEvent: {}
+[5.011733] (-) TimerEvent: {}
+[5.112096] (-) TimerEvent: {}
+[5.212441] (-) TimerEvent: {}
+[5.312747] (-) TimerEvent: {}
+[5.413089] (-) TimerEvent: {}
+[5.513445] (-) TimerEvent: {}
+[5.613849] (-) TimerEvent: {}
+[5.714194] (-) TimerEvent: {}
+[5.814524] (-) TimerEvent: {}
+[5.914821] (-) TimerEvent: {}
+[6.015120] (-) TimerEvent: {}
+[6.115450] (-) TimerEvent: {}
+[6.215739] (-) TimerEvent: {}
+[6.316075] (-) TimerEvent: {}
+[6.416517] (-) TimerEvent: {}
+[6.516888] (-) TimerEvent: {}
+[6.617242] (-) TimerEvent: {}
+[6.717607] (-) TimerEvent: {}
+[6.817961] (-) TimerEvent: {}
+[6.918310] (-) TimerEvent: {}
+[7.018645] (-) TimerEvent: {}
+[7.118983] (-) TimerEvent: {}
+[7.219257] (-) TimerEvent: {}
+[7.319577] (-) TimerEvent: {}
+[7.419961] (-) TimerEvent: {}
+[7.520329] (-) TimerEvent: {}
+[7.620679] (-) TimerEvent: {}
+[7.721010] (-) TimerEvent: {}
+[7.821283] (-) TimerEvent: {}
+[7.921628] (-) TimerEvent: {}
+[8.021950] (-) TimerEvent: {}
+[8.122345] (-) TimerEvent: {}
+[8.222647] (-) TimerEvent: {}
+[8.322924] (-) TimerEvent: {}
+[8.423358] (-) TimerEvent: {}
+[8.504881] (enpm673_final_proj) StdoutLine: {'line': b'[100%] \x1b[32m\x1b[1mLinking CXX shared library libanimated_box.so\x1b[0m\n'}
+[8.523429] (-) TimerEvent: {}
+[8.593134] (enpm673_final_proj) StdoutLine: {'line': b'[100%] Built target animated_box\n'}
+[8.601551] (enpm673_final_proj) CommandEnded: {'returncode': 0}
+[8.602060] (enpm673_final_proj) JobProgress: {'identifier': 'enpm673_final_proj', 'progress': 'install'}
+[8.608067] (enpm673_final_proj) Command: {'cmd': ['/usr/bin/cmake', '--install', '/ENPM673_turtlebot_perception_challenge/build/enpm673_final_proj'], 'cwd': '/ENPM673_turtlebot_perception_challenge/build/enpm673_final_proj', 'env': OrderedDict([('NV_CUDA_COMPAT_PACKAGE', 'cuda-compat-12-4'), ('HOSTNAME', 'grayson-XPS'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib:/usr/local/nvidia/lib:/usr/local/nvidia/lib64'), ('HOME', '/root'), ('OLDPWD', '/'), ('ROS_PYTHON_VERSION', '3'), ('CUDA_VERSION', '12.4.1'), ('ROS_DISTRO', 'humble'), ('NVIDIA_REQUIRE_CUDA', 'cuda>=12.4 brand=tesla,driver>=470,driver<471 brand=unknown,driver>=470,driver<471 brand=nvidia,driver>=470,driver<471 brand=nvidiartx,driver>=470,driver<471 brand=geforce,driver>=470,driver<471 brand=geforcertx,driver>=470,driver<471 brand=quadro,driver>=470,driver<471 brand=quadrortx,driver>=470,driver<471 brand=titan,driver>=470,driver<471 brand=titanrtx,driver>=470,driver<471 brand=tesla,driver>=525,driver<526 brand=unknown,driver>=525,driver<526 brand=nvidia,driver>=525,driver<526 brand=nvidiartx,driver>=525,driver<526 brand=geforce,driver>=525,driver<526 brand=geforcertx,driver>=525,driver<526 brand=quadro,driver>=525,driver<526 brand=quadrortx,driver>=525,driver<526 brand=titan,driver>=525,driver<526 brand=titanrtx,driver>=525,driver<526 brand=tesla,driver>=535,driver<536 brand=unknown,driver>=535,driver<536 brand=nvidia,driver>=535,driver<536 brand=nvidiartx,driver>=535,driver<536 brand=geforce,driver>=535,driver<536 brand=geforcertx,driver>=535,driver<536 brand=quadro,driver>=535,driver<536 brand=quadrortx,driver>=535,driver<536 brand=titan,driver>=535,driver<536 brand=titanrtx,driver>=535,driver<536'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('NVIDIA_DRIVER_CAPABILITIES', 'all'), ('TERM', 'xterm'), ('NV_CUDA_CUDART_VERSION', '12.4.127-1'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/local/nvidia/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'), ('NVARCH', 'x86_64'), ('DISPLAY', ':1'), ('LANG', 'en_US.UTF-8'), ('XAUTHORITY', '/run/user/1000/gdm/Xauthority'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('PWD', '/ENPM673_turtlebot_perception_challenge/build/enpm673_final_proj'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('NVIDIA_VISIBLE_DEVICES', 'all'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[8.611931] (enpm673_final_proj) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[8.612186] (enpm673_final_proj) StdoutLine: {'line': b'-- Execute custom install script\n'}
+[8.612407] (enpm673_final_proj) StdoutLine: {'line': b'-- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/lib/enpm673_final_proj/cpp_enpm673_final_proj\n'}
+[8.619181] (enpm673_final_proj) StdoutLine: {'line': b'-- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj/environment/pythonpath.sh\n'}
+[8.623490] (-) TimerEvent: {}
+[8.623911] (enpm673_final_proj) StdoutLine: {'line': b'-- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj/environment/pythonpath.dsv\n'}
+[8.628433] (enpm673_final_proj) StdoutLine: {'line': b'-- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/local/lib/python3.10/dist-packages/enpm673_module-0.0.0-py3.10.egg-info/PKG-INFO\n'}
+[8.632353] (enpm673_final_proj) StdoutLine: {'line': b'-- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/local/lib/python3.10/dist-packages/enpm673_module-0.0.0-py3.10.egg-info/SOURCES.txt\n'}
+[8.638166] (enpm673_final_proj) StdoutLine: {'line': b'-- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/local/lib/python3.10/dist-packages/enpm673_module-0.0.0-py3.10.egg-info/dependency_links.txt\n'}
+[8.643591] (enpm673_final_proj) StdoutLine: {'line': b'-- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/local/lib/python3.10/dist-packages/enpm673_module-0.0.0-py3.10.egg-info/top_level.txt\n'}
+[8.648000] (enpm673_final_proj) StdoutLine: {'line': b'-- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/local/lib/python3.10/dist-packages/enpm673_module/__init__.py\n'}
+[8.651918] (enpm673_final_proj) StdoutLine: {'line': b'-- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/local/lib/python3.10/dist-packages/enpm673_module/enpm673_final_proj.py\n'}
+[8.656355] (enpm673_final_proj) StdoutLine: {'line': b'-- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/lib/enpm673_final_proj/enpm673_final_proj_main.py\n'}
+[8.662079] (enpm673_final_proj) StdoutLine: {'line': b'-- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj/launch//enpm673_world.launch.py\n'}
+[8.667306] (enpm673_final_proj) StdoutLine: {'line': b'-- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/lib/enpm673_final_proj/libanimated_box.so\n'}
+[8.673087] (enpm673_final_proj) StdoutLine: {'line': b'-- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj/worlds//enpm673.world\n'}
+[8.678583] (enpm673_final_proj) StdoutLine: {'line': b'-- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj/worlds//animated_box.world\n'}
+[8.685444] (enpm673_final_proj) StdoutLine: {'line': b'-- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj//models/aruco_marker/materials/scripts/marker.material\n'}
+[8.690628] (enpm673_final_proj) StdoutLine: {'line': b'-- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj//models/aruco_marker/materials/textures/marker.png\n'}
+[8.695437] (enpm673_final_proj) StdoutLine: {'line': b'-- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj//models/aruco_marker/model.config\n'}
+[8.700026] (enpm673_final_proj) StdoutLine: {'line': b'-- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj//models/aruco_marker/model.sdf\n'}
+[8.706771] (enpm673_final_proj) StdoutLine: {'line': b'-- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj//models/checkerboard_6_8_0_03/checkerboard.sdf\n'}
+[8.711572] (enpm673_final_proj) StdoutLine: {'line': b'-- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj//models/checkerboard_6_8_0_03/model.config\n'}
+[8.715483] (enpm673_final_proj) StdoutLine: {'line': b'-- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj//models/floor_tile/model.config\n'}
+[8.719602] (enpm673_final_proj) StdoutLine: {'line': b'-- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj//models/floor_tile/model.sdf\n'}
+[8.723569] (-) TimerEvent: {}
+[8.725165] (enpm673_final_proj) StdoutLine: {'line': b'-- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj//models/lane_markings/model.config\n'}
+[8.729152] (enpm673_final_proj) StdoutLine: {'line': b'-- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj//models/lane_markings/model.sdf\n'}
+[8.733422] (enpm673_final_proj) StdoutLine: {'line': b'-- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj//models/paper_letter_size/model.config\n'}
+[8.737286] (enpm673_final_proj) StdoutLine: {'line': b'-- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj//models/paper_letter_size/model.sdf\n'}
+[8.742033] (enpm673_final_proj) StdoutLine: {'line': b'-- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj//models/textured_floor/model.config\n'}
+[8.747130] (enpm673_final_proj) StdoutLine: {'line': b'-- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj//models/textured_floor/model.sdf\n'}
+[8.751293] (enpm673_final_proj) StdoutLine: {'line': b'-- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj//models/umd_turtlebot3_waffle_pi/model.config\n'}
+[8.755356] (enpm673_final_proj) StdoutLine: {'line': b'-- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj//models/umd_turtlebot3_waffle_pi/model.sdf\n'}
+[8.760836] (enpm673_final_proj) StdoutLine: {'line': b'-- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/ament_index/resource_index/package_run_dependencies/enpm673_final_proj\n'}
+[8.766284] (enpm673_final_proj) StdoutLine: {'line': b'-- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/ament_index/resource_index/parent_prefix_path/enpm673_final_proj\n'}
+[8.771173] (enpm673_final_proj) StdoutLine: {'line': b'-- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj/environment/ament_prefix_path.sh\n'}
+[8.775300] (enpm673_final_proj) StdoutLine: {'line': b'-- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj/environment/ament_prefix_path.dsv\n'}
+[8.779877] (enpm673_final_proj) StdoutLine: {'line': b'-- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj/environment/path.sh\n'}
+[8.785520] (enpm673_final_proj) StdoutLine: {'line': b'-- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj/environment/path.dsv\n'}
+[8.790068] (enpm673_final_proj) StdoutLine: {'line': b'-- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj/local_setup.bash\n'}
+[8.794871] (enpm673_final_proj) StdoutLine: {'line': b'-- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj/local_setup.sh\n'}
+[8.799214] (enpm673_final_proj) StdoutLine: {'line': b'-- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj/local_setup.zsh\n'}
+[8.804168] (enpm673_final_proj) StdoutLine: {'line': b'-- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj/local_setup.dsv\n'}
+[8.809141] (enpm673_final_proj) StdoutLine: {'line': b'-- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj/package.dsv\n'}
+[8.814155] (enpm673_final_proj) StdoutLine: {'line': b'-- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/ament_index/resource_index/packages/enpm673_final_proj\n'}
+[8.819068] (enpm673_final_proj) StdoutLine: {'line': b'-- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj/cmake/enpm673_final_projConfig.cmake\n'}
+[8.823630] (-) TimerEvent: {}
+[8.824641] (enpm673_final_proj) StdoutLine: {'line': b'-- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj/cmake/enpm673_final_projConfig-version.cmake\n'}
+[8.829308] (enpm673_final_proj) StdoutLine: {'line': b'-- Symlinking: /ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/share/enpm673_final_proj/package.xml\n'}
+[8.853771] (enpm673_final_proj) StdoutLine: {'line': b"Listing '/ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/local/lib/python3.10/dist-packages/enpm673_module'...\n"}
+[8.853866] (enpm673_final_proj) StdoutLine: {'line': b"Compiling '/ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/local/lib/python3.10/dist-packages/enpm673_module/__init__.py'...\n"}
+[8.853903] (enpm673_final_proj) StdoutLine: {'line': b"Compiling '/ENPM673_turtlebot_perception_challenge/install/enpm673_final_proj/local/lib/python3.10/dist-packages/enpm673_module/enpm673_final_proj.py'...\n"}
+[8.858658] (enpm673_final_proj) CommandEnded: {'returncode': 0}
+[8.870637] (enpm673_final_proj) JobEnded: {'identifier': 'enpm673_final_proj', 'rc': 0}
+[8.871252] (-) EventReactorShutdown: {}
