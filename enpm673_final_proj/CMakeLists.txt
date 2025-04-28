@@ -48,6 +48,7 @@ install(PROGRAMS
 # Install launch files
 install(FILES
   launch/enpm673_world.launch.py
+  launch/new_enpm673_world.launch.py
   DESTINATION share/${PROJECT_NAME}/launch/
   )
 
