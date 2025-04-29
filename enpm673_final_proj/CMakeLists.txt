@@ -39,6 +39,7 @@ ament_python_install_package(enpm673_module)
 install(PROGRAMS
   scripts/enpm673_final_proj_main.py
   scripts/horizon_line.py
+  scripts/object_detection_stop_sign.py
   DESTINATION lib/${PROJECT_NAME}
   )
 
