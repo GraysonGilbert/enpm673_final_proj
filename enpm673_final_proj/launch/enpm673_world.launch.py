@@ -13,9 +13,9 @@ def generate_launch_description():
     world = os.path.join(
         get_package_share_directory('enpm673_final_proj'),
         'worlds',
-        #'enpm673.world'
+        'enpm673.world'
         #'animated_box.world'
-        'empty_world.world'
+        #'empty_world.world'
     )
 
     print (f"world = {world}")
