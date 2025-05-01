@@ -35,23 +35,26 @@ class StopSignDetector(Node):
         # Run Haar Cascade over image to find stop sign
         stop_sign_found = self.cascade_stop_sign.detectMultiScale(frame_gray, minSize=(10,10))
         
-        #Initially move foward at .1 m/s
+        #conditions to stop or drive
         stop_cmd = Twist()
-        stop_cmd.linear.x = 0.1
-        stop_cmd.linear.z = 0.0
-        self.cmd_vel.publish(stop_cmd)
-        # if stop sign is found draw box around detected stop sign and display 
-        if len(stop_sign_found) > 0:
-            
+        if len(stop_sign_found) == 0:
+            #Initially move foward at .1 m/s if no stop sign is there
+            stop_cmd.linear.x = 0.1
+            stop_cmd.linear.z = 0.0
+            self.cmd_vel.publish(stop_cmd)
+            print("***TURTLE BOT MOVING***")
+        elif len(stop_sign_found) > 0:
+            #stop sign is seen so turtle bot will stop
             stop_cmd.linear.x = 0.0
             stop_cmd.linear.z = 0.0
             self.cmd_vel.publish(stop_cmd)
-            print("TURTLE BOT STOPPING")
+            print("***TURTLE BOT STOPPING***")
             
             x = stop_sign_found[0][0]
             y = stop_sign_found[0][1]
             w = stop_sign_found[0][2]
             h = stop_sign_found[0][3]
+            # if stop sign is found draw box around detected stop sign and display 
             cv.rectangle(convert_image, (x,y), (x+w,y+h), (255,0,0),3)
             #Display Image with Stop sign
             # cv.imshow("frames",convert_image)
