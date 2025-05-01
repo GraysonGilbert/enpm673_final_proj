@@ -35,10 +35,14 @@ class StopSignDetector(Node):
         # Run Haar Cascade over image to find stop sign
         stop_sign_found = self.cascade_stop_sign.detectMultiScale(frame_gray, minSize=(10,10))
         
+        #Initially move foward at .1 m/s
+        stop_cmd = Twist()
+        stop_cmd.linear.x = 0.1
+        stop_cmd.linear.z = 0.0
+        self.cmd_vel.publish(stop_cmd)
         # if stop sign is found draw box around detected stop sign and display 
         if len(stop_sign_found) > 0:
             
-            stop_cmd = Twist()
             stop_cmd.linear.x = 0.0
             stop_cmd.linear.z = 0.0
             self.cmd_vel.publish(stop_cmd)
