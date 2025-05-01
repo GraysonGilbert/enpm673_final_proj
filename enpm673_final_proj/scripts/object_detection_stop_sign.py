@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 import cv2 as cv
-import numpy as np
-from matplotlib import pyplot as plt
 import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import Image
