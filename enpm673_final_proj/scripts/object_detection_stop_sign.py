@@ -53,7 +53,6 @@ class StopSignDetector(Node):
             w = stop_sign_found[0][2]
             h = stop_sign_found[0][3]
             cv.rectangle(convert_image, (x,y), (x+w,y+h), (255,0,0),3)
-
             #Display Image with Stop sign
             # cv.imshow("frames",convert_image)
             # cv.waitKey(1)
