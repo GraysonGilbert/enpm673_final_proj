@@ -34,6 +34,8 @@ install(TARGETS cpp_enpm673_final_proj
 ##############################
 # Install Python modules
 ament_python_install_package(enpm673_module)
+# ament_python_install_package(scripts)
+
 
 # Install python executable
 install(PROGRAMS
