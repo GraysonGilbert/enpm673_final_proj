@@ -34,11 +34,15 @@ install(TARGETS cpp_enpm673_final_proj
 ##############################
 # Install Python modules
 ament_python_install_package(enpm673_module)
+# ament_python_install_package(scripts)
+
 
 # Install python executable
 install(PROGRAMS
   scripts/enpm673_final_proj_main.py
   scripts/horizon_line.py
+  scripts/object_detection_stop_sign.py
+  scripts/optical_flow.py
   DESTINATION lib/${PROJECT_NAME}
   )
 
