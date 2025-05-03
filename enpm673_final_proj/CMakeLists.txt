@@ -43,6 +43,7 @@ install(PROGRAMS
   scripts/horizon_detection.py
   scripts/object_detection_stop_sign.py
   scripts/optical_flow.py
+  scripts/optical_flow_CSRT.py
   DESTINATION lib/${PROJECT_NAME}
   )
 

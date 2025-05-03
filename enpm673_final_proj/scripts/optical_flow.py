@@ -137,6 +137,7 @@ class OpticalFlowTracker(Node):
         #                                   flags=cv.OPTFLOW_FARNEBACK_GAUSSIAN)
         
         # Compute magnitude and angle of flow vectors
+        
         mag, _ = cv.cartToPolar(flow[..., 0], flow[..., 1])
 
         # Optional: visualize optical flow
@@ -215,18 +216,18 @@ class OpticalFlowTracker(Node):
             # cv.imshow('ROI', cv.resize(draw, (640, 480)))
             # cv.waitKey(4000)
             self._roi = (x + int(wFrame*0.4), y + int(hFrame*0.2), w, h)
-            roi_frame = self._frame.copy()
-            cv.rectangle(roi_frame, (x + int(wFrame*0.4), y + int(hFrame*0.2)), (x + int(wFrame*0.4) + w, y + int(hFrame*0.2) + h), (0, 0, 255), 10)
-            cv.imshow('ROI', cv.resize(roi_frame, (640, 480)))
-            cv.waitKey(4000)
+            # roi_frame = self._frame.copy()
+            # cv.rectangle(roi_frame, (x + int(wFrame*0.4), y + int(hFrame*0.2)), (x + int(wFrame*0.4) + w, y + int(hFrame*0.2) + h), (0, 0, 255), 10)
+            # cv.imshow('ROI', cv.resize(roi_frame, (640, 480)))
+            # cv.waitKey(4000)
             self.get_logger().info('Initialized ROI for obstacle detection')
             
             mask = np.zeros_like(gray)
             mask[y + int(hFrame*0.2):y + int(hFrame*0.2)+h, x + int(wFrame*0.4):x + int(wFrame*0.4)+w] = 255
             # self.get_logger().info('here')
-            combo = cv.add(gray, mask)
-            cv.imshow('Mask', cv.resize(combo, (640, 480)))
-            cv.waitKey(3000)
+            # combo = cv.add(gray, mask)
+            # cv.imshow('Mask', cv.resize(combo, (640, 480)))
+            # cv.waitKey(3000)
             # Select good starting features to track in the ROI using Shi-Tomasi corner detection
             try:
               p0 = cv.goodFeaturesToTrack(gray, 
@@ -267,7 +268,7 @@ class OpticalFlowTracker(Node):
           # cv.imshow('Optical Flow', ObjFrame)
           # cv.waitKey(2000)
           
-        # cv.imshow('Dense Optical Fl
+        # cv.imshow('Dense Optical Flow', cv.resize(flow_rgb, (640, 480)))
             
 
       #### TRACKING OBSTACLE USING LUCAS KANADE OPTICAL FLOW ####
@@ -321,7 +322,7 @@ class OpticalFlowTracker(Node):
           # track = cv.add(self._frame, self._track_mask)
           # # cv.imshow('Optical Flow', cv.resize(track, (640, 480)))
           # # cv.waitKey(1)                   
-                  
+          
         # elif self._first_feature is not None:
         try:
           # Calculate optical flow using Lucas-Kanade method
