@@ -16,14 +16,24 @@ class CameraSubscriberPublisher(Node):
     def __init__(self):
         super().__init__('camera_subscriber_publisher')
         self.bridge = CvBridge()
+           
+        #self._bridge = CvBridge()
 
         self.checkerboard_dims = (7, 5)  # (columns, rows)
-        
+        """
         # Subscribe to the camera topic
         self.image_sub = self.create_subscription(
             Image,
             '/camera/image_raw', 
             self.image_callback,
+            10
+        )
+        
+        # Subscribe to the turtlebot4 camera topic
+        self.image_sub = self.create_subscription(
+            Image,
+            '/camera/image_raw', 
+            self.image_callback_test,
             10
         )
         
@@ -33,13 +43,64 @@ class CameraSubscriberPublisher(Node):
             '/camera/processed_image',  
             10
         )
+        """
+
+        self._img_sub = self.create_subscription(Image, '/camera/image_raw', self.image_callback_test, 5)
+
+        self.image_ready = True  # Flag to control image grabbing
+        self.timer = self.create_timer(5.0, self.enable_next_image)  # Timer triggers every 5 seconds
+
+
+    def enable_next_image(self):
+        self.image_ready = True
+        self.get_logger().info("Ready to grab next image...")
+
+    def image_callback_test(self, msg):
+        if not self.image_ready:
+            return
+
+        self.image_ready = False  # Block until the next 5 seconds
+        self.get_logger().info("Image received and processed.")
+
+        print(f"ROS image encoding: {msg.encoding}")
+        # Convert and display the image
+        cv_image = self.bridge.imgmsg_to_cv2(msg, desired_encoding='rgb8')
+        cv_image = cv2.cvtColor(cv_image, cv2.COLOR_BGR2RGB)
+
+     
+        gray = cv2.cvtColor(cv_image, cv2.COLOR_RGB2GRAY)
+        cv2.imshow("One Frame Every 5s", gray)
+        cv2.waitKey(1)
+        
+        ret, corners = cv2.findChessboardCorners(gray, (7,5), None)
+        self.get_logger().info(f"findChessboardCorners returned: ret={ret}, number_of_corners={len(corners) if corners is not None else 0}")
     
+
     def image_callback(self, msg):
+
+        if not self.image_ready:
+            return
+
+        self.image_ready = False  # Block until the next 5 seconds
+        self.get_logger().info("Image received and processed.")
+
         # Convert the ROS image message to an OpenCV image
-        cv_image = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
+        cv_image = self.bridge.imgmsg_to_cv2(msg, desired_encoding='rgb8')
+
+        print(f"ROS image encoding: {msg.encoding}")
+        cv2.imwrite("ros_frame.jpg", cv_image)
 
         gray = cv2.cvtColor(cv_image, cv2.COLOR_RGB2GRAY)
+        #gray = cv2.cvtColor(cv_image, cv2.COLOR_BGR2GRAY)
         
+        cv2.imwrite("gray_ros_frame.jpg", gray)
+        print(f"cv_image shape: {gray.shape}")
+
+        # ret, corners = cv2.findChessboardCorners(
+        #     gray,
+        #     self.checkerboard_dims,
+        #     cv2.CALIB_CB_ADAPTIVE_THRESH + cv2.CALIB_CB_NORMALIZE_IMAGE
+        # )
         # Find the checkerboard corners
         ret, corners = cv2.findChessboardCorners(gray, self.checkerboard_dims, None)
 
@@ -129,10 +190,10 @@ class CameraSubscriberPublisher(Node):
         # cv2.line(cv_image, start_point, end_point, color, thickness)
 
         # Resize the image to, for example, 1280x720
-        resized_image = cv2.resize(image_with_lines, (1280, 720), interpolation=cv2.INTER_AREA)
+        #resized_image = cv2.resize(image_with_lines, (1280, 720), interpolation=cv2.INTER_AREA)
         
         # Convert the processed OpenCV image back to ROS Image message
-        processed_msg = self.bridge.cv2_to_imgmsg(image_with_lines, encoding="bgr8")
+        processed_msg = self.bridge.cv2_to_imgmsg(image_with_lines, encoding="rgb8")
         #processed_msg = self.bridge.cv2_to_imgmsg(gray, encoding="mono8")
         
         # Publish the processed image on a new topic
@@ -140,7 +201,7 @@ class CameraSubscriberPublisher(Node):
 
         # Optionally, display the processed image in a window
         cv2.namedWindow("Processed Camera Feed", cv2.WINDOW_NORMAL)
-        cv2.imshow("Processed Camera Feed", resized_image)
+        cv2.imshow("Processed Camera Feed", image_with_lines)
         cv2.waitKey(1)
 
 
