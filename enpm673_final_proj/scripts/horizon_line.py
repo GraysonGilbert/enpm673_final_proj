@@ -20,22 +20,23 @@ class CameraSubscriberPublisher(Node):
         #self._bridge = CvBridge()
 
         self.checkerboard_dims = (7, 5)  # (columns, rows)
-        """
-        # Subscribe to the camera topic
-        self.image_sub = self.create_subscription(
-            Image,
-            '/camera/image_raw', 
-            self.image_callback,
-            10
-        )
         
-        # Subscribe to the turtlebot4 camera topic
+        # Subscribe to the camera topic
         self.image_sub = self.create_subscription(
             Image,
             '/camera/image_raw', 
             self.image_callback_test,
             10
         )
+        """
+        # Subscribe to the turtlebot4 camera topic
+        self.image_sub = self.create_subscription(
+            Image,
+            '/camera/image_raw', 
+            self.image_callback,
+            10
+        )
+        """
         
         # Publisher for the processed image
         self.image_pub = self.create_publisher(
@@ -43,9 +44,9 @@ class CameraSubscriberPublisher(Node):
             '/camera/processed_image',  
             10
         )
-        """
+        
 
-        self._img_sub = self.create_subscription(Image, '/camera/image_raw', self.image_callback_test, 5)
+        #self._img_sub = self.create_subscription(Image, '/camera/image_raw', self.image_callback_test, 5)
 
         self.image_ready = True  # Flag to control image grabbing
         self.timer = self.create_timer(5.0, self.enable_next_image)  # Timer triggers every 5 seconds
@@ -54,7 +55,8 @@ class CameraSubscriberPublisher(Node):
     def enable_next_image(self):
         self.image_ready = True
         self.get_logger().info("Ready to grab next image...")
-
+        
+    
     def image_callback_test(self, msg):
         if not self.image_ready:
             return
@@ -75,7 +77,7 @@ class CameraSubscriberPublisher(Node):
         ret, corners = cv2.findChessboardCorners(gray, (7,5), None)
         self.get_logger().info(f"findChessboardCorners returned: ret={ret}, number_of_corners={len(corners) if corners is not None else 0}")
     
-
+        
     def image_callback(self, msg):
 
         if not self.image_ready:
@@ -109,7 +111,7 @@ class CameraSubscriberPublisher(Node):
 
 
         image_with_lines = cv_image.copy()
-        """
+        
         if ret:
             print(f"Checkerboard detected with {len(corners)} points!")
 
@@ -180,7 +182,7 @@ class CameraSubscriberPublisher(Node):
             # Draw horizon line
 
             self.draw_horizontal_through_point(image_with_lines, vp_vertical)
-        """
+        
 
         # # Draw a line on the image
         # start_point = (50, 50)  # Starting point of the line
