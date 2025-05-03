@@ -7,6 +7,8 @@ from rclpy.node import Node
 from sensor_msgs.msg import Image
 from geometry_msgs.msg import Twist
 from cv_bridge import CvBridge
+from ament_index_python.packages import get_package_share_directory
+import os
 
 class StopSignDetector(Node):
     def __init__(self):
@@ -19,7 +21,9 @@ class StopSignDetector(Node):
         self.cmd_vel = self.create_publisher(Twist,'/cmd_vel',10)
         
         #load in cascade classifier initialization
-        self.cascade_stop_sign = cv.CascadeClassifier('/home/ahall113/enpm673_final_proj/stop_sign_sample/stop_data.xml')
+        cascade_path = os.path.join(get_package_share_directory('enpm673_final_proj'), 'stop_sign_sample','stop_data.xml')
+        self.cascade_stop_sign = cv.CascadeClassifier(cascade_path)
+        # self.cascade_stop_sign = cv.CascadeClassifier('/home/ahall113/enpm673_final_proj/stop_sign_sample/stop_data.xml')
 
         #conver ros image to open cv type
         self.bridge = CvBridge()
@@ -42,6 +46,7 @@ class StopSignDetector(Node):
             stop_cmd.linear.x = 0.1
             stop_cmd.linear.z = 0.0
             self.cmd_vel.publish(stop_cmd)
+            print("---STOP SIGN DETECTED---**")
             print("***TURTLE BOT MOVING***")
         elif len(stop_sign_found) > 0:
             #stop sign is seen so turtle bot will stop
