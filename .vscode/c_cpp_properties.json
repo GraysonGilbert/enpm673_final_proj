@@ -1,0 +1,23 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/dustinhartnett/Documents/GitHub/enpm605_final/enpm605_final_ws/install/ros2_aruco_interfaces/include/**",
+        "/home/dustinhartnett/Documents/GitHub/enpm605_final/enpm605_final_ws/install/mecanum_drive_controller/include/**",
+        "/home/dustinhartnett/Documents/GitHub/enpm605_final/enpm605_final_ws/install/imu_sensor_broadcaster/include/**",
+        "/opt/ros/humble/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}

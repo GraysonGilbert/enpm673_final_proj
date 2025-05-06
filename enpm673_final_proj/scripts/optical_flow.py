@@ -10,12 +10,15 @@ from cv_bridge import CvBridge
 class OpticalFlowTracker(Node):
   def __init__(self):
     super().__init__('optical_flow')
-    # self.declare_parameter('use_sim_time', True)
+
     # Subscribe to camera topic
     self._img_sub = self.create_subscription(Image, '/camera/image_raw', self._OF_callback, 5)
     
     # Publish to command velocity topic
     self._cmd_vel = self.create_publisher(Twist, '/cmd_vel', 10)
+    
+    # Initialize tracker
+    self._tracker = cv.TrackerCSRT_create()
     
     # Convert raw ROS image to OpenCV type
     self._bridge = CvBridge()
@@ -30,15 +33,7 @@ class OpticalFlowTracker(Node):
     # Define parameters for conditional logging
     self._detected = False
     self._stopped = False
-    self._mask_init = False
-    
-    # Initialize center of Lucas-Kanade optical flow tracker
-    self._sum_LK_x = 0
-    self._sum_LK_y = 0
-    self._avg_LK_x = 0
-    self._avg_LK_y = 0
-    self._LK_center = [int(self._avg_LK_x), int(self._avg_LK_y)]
-    
+
     # Define the stop command
     self._stop_cmd = Twist()
     self._stop_cmd.linear.x = 0.0
@@ -46,50 +41,76 @@ class OpticalFlowTracker(Node):
     
     # Define the go command
     self._go_cmd = Twist()
-    self._go_cmd.linear.x = 0.1
     self._go_cmd.linear.z = 0.0
     
     # Initialize region of interest (ROI) for obstacle detection
     self._roi = None
     
-    # Initialize list to store first frames for sampling environment baseline
+    # Initialize parameters for sampling environment baseline
     self._avg = 0
     self._avg_frames = []
     
-    self.get_logger().info('*'*50)
-    self.get_logger().info('Optical Flow Obstacle Detection Node Initialized')
-    self.get_logger().info('*'*50)
+    #############################
+    #### TUNEABLE PARAMETERS ####
+    #############################
+    
+    ### Set the linear speed of the turtlebot ###
+    # Going to slow may result in bad optical flow readings
+    # Going too fast may result in the floor getting picked up (baseline average and search window should stop this)
+    self._go_cmd.linear.x = 0.15
+    
+    ### Parameters for window of frame to look for obstacle ###
+    # Make smaller for looking at a smaller window, larger for wider area
+    
+    # Look between _w_low % and _w_high % of the frame width (left to right)
+    self._w_low = 0.4
+    self._w_high = 0.6
+    # Look between _h_high % and _h_low % of the frame height (top to bottom)
+    self._h_high = 0.2
+    self._h_low = 0.8
+    
+    ### Number of frames to sample for environment baseline ###
+    # Ideally this is large to ensure proper readings, but robot frame rate may
+    # make waiting for a lot of frames unreasonable
+    self._avg_frame_counter = 15
+    
+    ### Detection threshold  gain ###
+    # Used to determine when an average motion score is considered an obstacle
+    # Readings above this threshold multiplied by the average are considered obstacles
+    self._detection_gain = 1.75
+    
+    ### Mask threshold gain ###
+    # Once an obstacle is detected, this is multipled by the detection threshold value
+    # to threshold the magnitude of the optical flow to create a mask (remove low flow areas)
+    self._mask_gain = 2.0
+    
+    #############################
+    
+    self.get_logger().info('**** OPTICAL FLOW OBSTACLE DETECTION NODE INITIALIZED ****')
     
   # Subscription callback for performing optical flow detection and tracking
   def _OF_callback(self,msg):
-    global prev_gray
-    global gray
-    global mask
-    global contours
-    global x, y, w, h, hFrame, wFrame, p0, track
+    
+    # Global variables
+    global prev_gray, gray, contours, x, y, w, h, hFrame, wFrame, ret, center, mask
+    
     #### GRAB FIRST FRAME TO INITIALIZE OPTICAL FLOW ####
     
     if self._first_frame is None:
       try:
-        # Grab the first frame
-        self._first_frame = self._bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
-        self._prev_frame = self._first_frame.copy()
-        prev_gray = cv.cvtColor(self._prev_frame, cv.COLOR_BGR2GRAY)
-        # cv.imshow('First Frame', cv.resize(self._first_frame, (640, 480)))
-        # cv.waitKey(1000)
-        
-        # Initialize the mask for drawing LK optical flow
-        self._track_mask = np.zeros_like(self._first_frame)
         
         # Begin turtlebot driving
         try:
-          self.get_logger().info('*'*50)
-          self.get_logger().info('Turtlebot Beginning to Drive')
-          self.get_logger().info('*'*50)
-          # self._cmd_vel.publish(self._go_cmd)
+          self.get_logger().info('**** TURTLEBOT DRIVING ****')
+          self._cmd_vel.publish(self._go_cmd)
         except Exception as e:
           self.get_logger().error(f"Error publishing go command: {e}")
           return
+        
+        # Grab the first frame and intitialize it as prev_gray
+        self._first_frame = self._bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
+        self._prev_frame = self._first_frame.copy()
+        prev_gray = cv.cvtColor(self._prev_frame, cv.COLOR_BGR2GRAY)
         
       except Exception as e:
         self.get_logger().error(f"Error grabbing image: {e}")
@@ -98,23 +119,34 @@ class OpticalFlowTracker(Node):
 
     else:
       
-      # Grab the current frame
+      #### GRAB CURRENT FRAME ####
       try:
+        # If no obstacle is detected, continue driving
+        if not self._detected:
+          try:
+            self._cmd_vel.publish(self._go_cmd)
+          except Exception as e:
+            self.get_logger().error(f"Error publishing go command: {e}")
+            return
+          
+        # Grab new frame
         self._frame = self._bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
         gray = cv.cvtColor(self._frame, cv.COLOR_BGR2GRAY)
       except Exception as e:
         self.get_logger().error(f"Error grabbing image: {e}")
         return
       
-      #### DRIVING USING DENSE OPTICAL FLOW ####
+      #### DRIVING WITH DENSE OPTICAL FLOW DETECTION ####
       
+      # If no obstacle detected ...
       if not self._detected:
         
-        # Calculate dense optical flow
+        # Define reagion of interest to look for obstacle
         hFrame, wFrame = prev_gray.shape
-        gray_roi = gray[int(hFrame*0.2):int(hFrame*0.8), int(wFrame*0.4):int(wFrame*0.6)]
-        prev_gray_roi = prev_gray[int(hFrame*0.2):int(hFrame*0.8), int(wFrame*0.4):int(wFrame*0.6)]
+        gray_roi = gray[int(hFrame*self._h_high):int(hFrame*self._h_low), int(wFrame*self._w_low):int(wFrame*self._w_high)]
+        prev_gray_roi = prev_gray[int(hFrame*self._h_high):int(hFrame*self._h_low), int(wFrame*self._w_low):int(wFrame*self._w_high)]
         
+        # Calculate dense optical flow in ROI using Farneback method
         flow = cv.calcOpticalFlowFarneback(prev=prev_gray_roi, 
                                           next=gray_roi, 
                                           flow=None,
@@ -125,64 +157,74 @@ class OpticalFlowTracker(Node):
                                           poly_n=5, 
                                           poly_sigma=1.2, 
                                           flags=cv.OPTFLOW_FARNEBACK_GAUSSIAN)
-        # flow = cv.calcOpticalFlowFarneback(prev=prev_gray_roi, 
-        #                                   next=gray_roi, 
-        #                                   flow=None,
-        #                                   pyr_scale=0.4, 
-        #                                   levels=3, 
-        #                                   winsize=11, 
-        #                                   iterations=3, 
-        #                                   poly_n=5, 
-        #                                   poly_sigma=1.2, 
-        #                                   flags=cv.OPTFLOW_FARNEBACK_GAUSSIAN)
+        '''
+        These are ideal settings, but computationally expensive
+        If robot is doing well, try this ...
         
-        # Compute magnitude and angle of flow vectors
+        flow = cv.calcOpticalFlowFarneback(prev=prev_gray_roi, 
+                                          next=gray_roi, 
+                                          flow=None,
+                                          pyr_scale=0.4, 
+                                          levels=3, 
+                                          winsize=11, 
+                                          iterations=3, 
+                                          poly_n=5, 
+                                          poly_sigma=1.2, 
+                                          flags=cv.OPTFLOW_FARNEBACK_GAUSSIAN)
+        ''' 
         
+        # Compute magnitude of flow vectors
         mag, _ = cv.cartToPolar(flow[..., 0], flow[..., 1])
+        
+        '''
+        Optional - visualize optical flow for testing
+        hsv = np.zeros_like(self._prev_frame)
+        hsv[..., 1] = 255
+        hsv[..., 0] = ang * 180 / np.pi / 2
+        hsv[..., 2] = cv.normalize(mag, None, 0, 255, cv.NORM_MINMAX)
+        flow_rgb = cv.cvtColor(hsv, cv.COLOR_HSV2BGR)
+        '''
 
-        # Optional: visualize optical flow
-        # hsv = np.zeros_like(self._prev_frame)
-        # hsv[..., 1] = 255
-        # hsv[..., 0] = ang * 180 / np.pi / 2
-        # hsv[..., 2] = cv.normalize(mag, None, 0, 255, cv.NORM_MINMAX)
-        # flow_rgb = cv.cvtColor(hsv, cv.COLOR_HSV2BGR)
-
-        # Obstacle detection: check for high motion in middle
-        # hMag, wMag = mag.shape
-        # mag_roi = mag[int(hMag*0.4):int(hMag*0.6), int(wMag*0.3):int(wMag*0.7)]
+        # Grab average optical flow magnitude in frame
         motion_score = np.mean(mag)
-        self.get_logger().info(f'Optical flow motion score: {motion_score}')
 
+        #### SAMPLING ENVIRONMENT BASELINE FOR FIRST FEW FRAMES ONLY ####
+        
         # Compute average motion score over inital frames to get environment baseline
-        if len(self._avg_frames) < 20:
-          # Continue driving (need?)
+        if len(self._avg_frames) < self._avg_frame_counter:
+          # Drive turtlebot and sample environment
           try:
-            self._cmd_vel.publish(self._stop_cmd)
+            self._cmd_vel.publish(self._go_cmd)
           except Exception as e:
             self.get_logger().error(f"Error publishing go command: {e}")
             return
+          
+          # Store motion score and calculate average
           self._avg_frames.append(motion_score)
           self._avg = np.mean(self._avg_frames)
-          self.get_logger().info(f'Optical flow average: {self._avg}')
-        
-        # else:
-        #   self.get_logger().info('Turtlebot driving - Optical flow obstacle detection in progress ...')
-        #   # Continue driving (need?)
-        #   try:
-        #     self._cmd_vel.publish(self._go_cmd)
-        #   except Exception as e:
-        #     self.get_logger().error(f"Error publishing go command: {e}")
-        #     return
+          self.get_logger().info(f'Sampling environment - average motion score after {len(self._avg_frames)} frames: {self._avg:.3f}')
 
-        threshold = self._avg*4.0 # Tune threshold as needed
-
-        
-        #### IF OBJECT DETECTED, STOP TURTLEBOT ####
-        if motion_score > threshold:  # Tune threshold as needed
-          self.get_logger().info('*'*50)
-          self.get_logger().info('Obstacle detected! Stopping turtlebot ...')
-          self.get_logger().info('*'*50)
+        # If enough frames have been sampled, stop sampling
+        else:
+          self.get_logger().info(f'Optical flow motion score: {motion_score:.3f}')
           
+          # Drive turtlebot and continue calculating motion score
+          try:
+            self._cmd_vel.publish(self._go_cmd)
+          except Exception as e:
+            self.get_logger().error(f"Error publishing go command: {e}")
+            return
+
+        # Define threshold for detecting obstacles as a function of the average motion score
+        threshold = self._avg*self._detection_gain # Tune threshold as needed in __init__
+
+        #### IF OBJECT DETECTED, STOP TURTLEBOT ####
+        
+        # If motion score threshold is met and enough frames have been sampled (avoids erroneous detection) ...
+        if motion_score > threshold and len(self._avg_frames) > int(self._avg_frame_counter * 0.67):  # Tune threshold as needed
+          self.get_logger().info('**** OBSTACLE DETECTED - STOPPING TURTLEBOT ****')
+          
+          # Stop turtlebot
           try:
             self._cmd_vel.publish(self._stop_cmd)
             self._stopped = True
@@ -190,188 +232,78 @@ class OpticalFlowTracker(Node):
             self.get_logger().error(f"Error publishing stop command: {e}")
             return
           
+          # Define parameter as True so algorithm moves to tracking phase
           self._detected = True
-          # cv.putText(flow_rgb, 'Obstacle Detected!', (50, 50),
-          #             cv.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
           
-          # Threshold the magnitude to create a motion mask
-          maskThreshold = threshold*2.0 # Tune threshold as needed
+          # Threshold the motion score again with a higher threshold to create a motion mask
+          # This will remove low flow areas and help with contour detection
+          maskThreshold = threshold*self._mask_gain # Tune threshold as needed above in __init__
           _, mask = cv.threshold(mag, maskThreshold, 255, cv.THRESH_BINARY)
           
           # Convert mask to an 8-bit single-channel image
-          # cv.imshow('mask', mask)
-          # cv.waitKey(2000)
           mask = mask.astype(np.uint8)
-          # cv.imshow('Mask', cv.resize(mask, (640, 480)))
-          # cv.waitKey(4000)
+          
+          # Find contours in the mask
           contours, _ = cv.findContours(mask, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
           
-          # Calculate bounding boxes for each contour
+          # Assume largest contour is obstacle and get it's bounding box
           try:
             Objcontour = max(contours, key=cv.contourArea)
             x, y, w, h = cv.boundingRect(Objcontour)
-            self.get_logger().info(f'Obstacle detected at (x,y): {x}, {y}')
-            # draw = self._frame.copy()
-            # cv.rectangle(draw, (x + int(wFrame*0.45), y + int(hFrame*0.3)), (x + int(wFrame*0.45) + w, y + int(hFrame*0.3) + h), (0, 0, 255), 10)
-            # cv.imshow('ROI', cv.resize(draw, (640, 480)))
-            # cv.waitKey(4000)
-            self._roi = (x + int(wFrame*0.4), y + int(hFrame*0.2), w, h)
-            # roi_frame = self._frame.copy()
-            # cv.rectangle(roi_frame, (x + int(wFrame*0.4), y + int(hFrame*0.2)), (x + int(wFrame*0.4) + w, y + int(hFrame*0.2) + h), (0, 0, 255), 10)
-            # cv.imshow('ROI', cv.resize(roi_frame, (640, 480)))
-            # cv.waitKey(4000)
-            self.get_logger().info('Initialized ROI for obstacle detection')
             
-            mask = np.zeros_like(gray)
-            mask[y + int(hFrame*0.2):y + int(hFrame*0.2)+h, x + int(wFrame*0.4):x + int(wFrame*0.4)+w] = 255
-            # self.get_logger().info('here')
-            # combo = cv.add(gray, mask)
-            # cv.imshow('Mask', cv.resize(combo, (640, 480)))
-            # cv.waitKey(3000)
-            # Select good starting features to track in the ROI using Shi-Tomasi corner detection
-            try:
-              p0 = cv.goodFeaturesToTrack(gray, 
-                                                         mask=mask, 
-                                                         maxCorners=100, 
-                                                         qualityLevel=0.3, 
-                                                         minDistance=7, 
-                                                         blockSize=7)
-              # p0 = self._first_feature
-              self.get_logger().info('Optical flow features detected - Tracking Obstacle ...')
-            except Exception as e:  
-              self.get_logger().error(f"Error grabbing good features: {e}")
-              return
+            # Define the ROI to pass to the tracker
+            self._roi = (x + int(wFrame*self._w_low), y + int(hFrame*self._h_high), w, h)
+
+            self.get_logger().info('**** INITIALIZED ROI FOR OBSTACLE TRACKING ****')
             
-            # Get center of detected features and plot
-            for i in range(len(p0)):              
-              x, y = p0[i].ravel()
-              self._sum_LK_x += x
-              self._sum_LK_y += y
-            
-            self._avg_LK_x = int(self._sum_LK_x / len(p0))
-            self._avg_LK_y = int(self._sum_LK_y / len(p0))
-            cv.circle(self._track_mask, (self._avg_LK_x, self._avg_LK_y), 25, (0, 0, 255), -1)
-            track = cv.add(self._frame, self._track_mask)
-            
-            # reset sum and avg values
-            self._sum_LK_x = 0
-            self._sum_LK_y = 0 
-            self._avg_LK_x = 0
-            self._avg_LK_y = 0
+            # Initialize the CSRT tracker with the first frame and ROI
+            ret = self._tracker.init(self._frame, self._roi)
+            self.get_logger().info('**** INITIALIZED CSRT TRACKER ****')
             
           except ValueError:
             self.get_logger().error('No contours found in detected obstacle')
-            return
-          
-          # ObjFrame = frame.copy()
-          # cv.rectangle(ObjFrame, (x, y), (x + w, y + h), (0, 255, 0), 2)
-          # cv.imshow('Optical Flow', ObjFrame)
-          # cv.waitKey(2000)
-          
-        # cv.imshow('Dense Optical Flow', cv.resize(flow_rgb, (640, 480)))
-            
+            return                      
 
-      #### TRACKING OBSTACLE USING LUCAS KANADE OPTICAL FLOW ####
+      #### TRACKING OBSTACLE USING CSRT TRACKER ####
       
+      # If an obstacle has been detected and the turtlebot is stopped ...
       elif self._detected and self._stopped:
         
-        # if self._stopped:
-          
-          # self._mask_init = True
-            # cv.imshow('Mask', cv.resize(mask, (640, 480)))
-            # cv.waitKey(4000)
-            
-          # elif self._mask_init:
-          #   mask[int(self._avg_LK_y-h/2):int(self._avg_LK_y+h/2), int(self._avg_LK_x-w/2):int(self._avg_LK_x+w/2)] = 255
-            # cv.imshow('Mask', cv.resize(mask, (640, 480)))
-            # cv.waitKey(2000)
-            
-            
-        # if self._first_feature is None:
-          # mask = np.zeros_like(prev_gray)
+        # Update tracker with the current frame and get the new bounding box
+        success, box = self._tracker.update(self._frame)
         
-          # # if not self._mask_init:
-          # mask[y + int(hFrame*0.2):y + int(hFrame*0.2)+h, x + int(wFrame*0.4):x + int(wFrame*0.4)+w] = 255
-          # self.get_logger().info('here')
-          # combo = cv.add(prev_gray, mask)
-          # cv.imshow('Mask', cv.resize(combo, (640, 480)))
-          # cv.waitKey(3000)
-          # # Select good starting features to track in the ROI using Shi-Tomasi corner detection
-          # try:
-          #   self._first_feature = cv.goodFeaturesToTrack(prev_gray, 
-          #                                               mask=mask, 
-          #                                               maxCorners=100, 
-          #                                               qualityLevel=0.3, 
-          #                                               minDistance=7, 
-          #                                               blockSize=7)
-          #   p0 = self._first_feature
-          #   self.get_logger().info('Optical flow features detected - Tracking Obstacle ...')
-          # except Exception as e:  
-          #   self.get_logger().error(f"Error grabbing good features: {e}")
-          #   return
+        if success:
+          self.get_logger().info('CSRT tracker updated - tracking obstacle ...')
+          x,y,w,h = [int(v) for v in box]
           
-          # # Get center of detected features and plot
-          # for i in range(len(p0)):              
-          #   x, y = p0[i].ravel()
-          #   self._sum_LK_x += x
-          #   self._sum_LK_y += y
-          
-          # self._avg_LK_x = int(self._sum_LK_x / len(p0))
-          # self._avg_LK_y = int(self._sum_LK_y / len(p0))
-          # cv.circle(self._track_mask, (self._avg_LK_x, self._avg_LK_y), 25, (0, 0, 255), -1)
-          # track = cv.add(self._frame, self._track_mask)
-          # # cv.imshow('Optical Flow', cv.resize(track, (640, 480)))
-          # # cv.waitKey(1)                   
-          
-        # elif self._first_feature is not None:
-        try:
-          # Calculate optical flow using Lucas-Kanade method
-          self.get_logger().info('here')
-          
-          p1, st, _ = cv.calcOpticalFlowPyrLK(prev_gray, gray, p0, None)
-        except Exception as e:
-          self.get_logger().error(f"Error grabbing good features in p0: {e}")
+          # Draw box and center on frame and show image
+          cv.rectangle(self._frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
+          center = (int(x + w/2), int(y + h/2))
+          cv.circle(self._frame, center, 25, (0, 0, 255), -1)
+          cv.imshow('Optical Flow', cv.resize(self._frame, (640, 480)))
+          cv.waitKey(1)
+        else:
+          self.get_logger().error('CSRT tracker failed to update')
           return
-                        
-        # Select good points
-        good = p1[st == 1]
-        plot = self._frame.copy()
-        # Get center of detected features and plot
-        for i in range(len(good)):
-          x, y = good[i].ravel()
-          self._sum_LK_x += x
-          self._sum_LK_y += y
-          cv.circle(plot, (int(x), int(y)), 15, (0, 255, 0), -1)
-        cv.imshow('points', cv.resize(plot, (640, 480)))
-        cv.waitKey(1)
-        self._avg_LK_x = int(self._sum_LK_x / len(good))
-        self._avg_LK_y = int(self._sum_LK_y / len(good))
-        # self.get_logger().info(f'Obstacle center (x,y): {self._avg_LK_x}, {self._avg_LK_y}')
         
-        cv.circle(self._track_mask, (self._avg_LK_x, self._avg_LK_y), 25, (0, 0, 255), -1)
-        track = cv.add(self._frame, self._track_mask)
-        # cv.imshow('Optical Flow', cv.resize(track, (640, 480)))
-        # cv.waitKey(1)
-        
-        # Set current frame points to be the previous frame points for nexr iteration
-        p0 = good.reshape(-1, 1, 2)
-        self.get_logger().info(f'Avg x, y: {self._avg_LK_x}, {self._avg_LK_y}')
-        if self._avg_LK_x < self._frame.shape[1]*0.1 or self._avg_LK_x > self._frame.shape[1]*0.9 or self._avg_LK_y < self._frame.shape[0]*0.1:
+        # If the tracker has the object moving to the outter 10% of the frame, assume it is out of the way
+        if center[0] < self._frame.shape[1]*0.1 or center[0] > self._frame.shape[1]*0.9 or center[1] < self._frame.shape[0]*0.1:
+          
+          # Destroy tracker window
           cv.destroyAllWindows()
           
-          self.get_logger().info('*'*50)
-          self.get_logger().info('Obstacle Removed From Path - Turtlebot Resuming')
-          self.get_logger().info('*'*50)
+          self.get_logger().info('**** OBSTACLE REMOVED FROM PATH - RESETTING ALGORITHM ****')
           
+          # Reset parameters
           self._detected = False
           self._stopped = False
           self._first_feature = None
-          self._mask_init = False
-        self._sum_LK_x = 0
-        self._sum_LK_y = 0
-        self._avg_LK_x = 0
-        self._avg_LK_y = 0
-              
+          self._roi = None
+          self._avg_frames = []
+          self._avg = 0
+          self._tracker = None
+          self._tracker = cv.TrackerCSRT_create()
+
     # Set current frame to be the previous frame for next iteration        
     self._prev_frame = self._frame
 
