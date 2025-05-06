@@ -27,45 +27,56 @@ class StopSignDetector(Node):
 
         #conver ros image to open cv type
         self.bridge = CvBridge()
-    
-    def find_stop_sign(self,msg):
         
+        #print first image to screen
+        # self.first_image_activate = 0
+        self.window_created = False
+
+        
+    def find_stop_sign(self,msg):
         # convert ros image to open cv type
         convert_image = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
-        
         # convert to gray imaage for feature detection
         frame_gray = cv.cvtColor(convert_image, cv.COLOR_BGR2GRAY)
-        
         # Run Haar Cascade over image to find stop sign
         stop_sign_found = self.cascade_stop_sign.detectMultiScale(frame_gray, minSize=(10,10))
-        
         #conditions to stop or drive
         stop_cmd = Twist()
+        print("variable activation: ", stop_sign_found)
+        
         if len(stop_sign_found) == 0:
             #Initially move foward at .1 m/s if no stop sign is there
             stop_cmd.linear.x = 0.1
-            stop_cmd.linear.z = 0.0
+            stop_cmd.angular.z = 0.0
             self.cmd_vel.publish(stop_cmd)
-            print("---STOP SIGN DETECTED---**")
             print("***TURTLE BOT MOVING***")
+            print()
+            #close detection window if stop sign is found
+            # cv.destroyAllWindows()
         elif len(stop_sign_found) > 0:
             #stop sign is seen so turtle bot will stop
+            # self.first_image_activate += 1
             stop_cmd.linear.x = 0.0
-            stop_cmd.linear.z = 0.0
+            stop_cmd.angular.z = 0.0
             self.cmd_vel.publish(stop_cmd)
+            print("---STOP SIGN DETECTED---")
             print("***TURTLE BOT STOPPING***")
-            
+            print()
             x = stop_sign_found[0][0]
             y = stop_sign_found[0][1]
             w = stop_sign_found[0][2]
             h = stop_sign_found[0][3]
-            # if stop sign is found draw box around detected stop sign and display 
+            # if self.first_image_activate ==1:
+            # if stop sign is found draw box around detected stop sign and display
             cv.rectangle(convert_image, (x,y), (x+w,y+h), (255,0,0),3)
-            #Display Image with Stop sign
+            #Display Image with Stop sign identified
+            # if not self.window_created:
+            #     cv.namedWindow("frames", cv.WINDOW_NORMAL) 
+            #     cv.resizeWindow("frames", 400, 300)         
+            #     cv.moveWindow("frames", 10, 10)
+            #     self.window_created = True        
             # cv.imshow("frames",convert_image)
             # cv.waitKey(1)
-        # else:
-            # cv.destroyAllWindows()
 
 def main(args=None):
     rclpy.init(args=args)
@@ -78,7 +89,7 @@ if __name__ == '__main__':
     main()
     
     
-    
+#original code   
 # frame_count = 4
 # for frames in range(frame_count):
 #     frame_path = f"/home/ahall113/enpm673_final_proj/stop_sign_sample/stop_sign_{frames}.jpg"
