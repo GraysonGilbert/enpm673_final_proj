@@ -11,7 +11,7 @@
         <visual name='visual'>
           <geometry>
             <box>
-              <size>0.2159 0.2794 0.001</size>
+              <size>0.2159 0.2794 0.0002</size> <!-- reducing thickness from 0.001 to prevent robot from bouncing after driving on paper-->
             </box>
           </geometry>
           <material>
@@ -38,7 +38,7 @@
         <name>aruco</name>
         <static>true</static>       <!--no interaction-->
         <uri>model://aruco_marker</uri>
-        <pose>0.0 0.0 0.001 1.57 -1.57 -1.57</pose>
+        <pose>0.0 0.0 0.0002 1.57 -1.57 -1.57</pose> <!-- changed to match new paper reduced thickness that is used for prevent robot from bouncing on it-->
       </include>
 
       <allow_auto_disable>1</allow_auto_disable>
