@@ -14,8 +14,7 @@ def generate_launch_description():
         get_package_share_directory('enpm673_final_proj'),
         'worlds',
         'enpm673.world'
-        #'animated_box.world'
-        #'empty_world.world'
+#        'animated_box.world'
     )
 
     print (f"world = {world}")
@@ -31,4 +30,3 @@ def generate_launch_description():
     ld = LaunchDescription()
     ld.add_action(gazebo_cmd)
     return ld
-    
