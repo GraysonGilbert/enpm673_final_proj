@@ -9,7 +9,7 @@ from cv_bridge import CvBridge
 
 class HorizonLine(Node):
   def __init__(self):
-    super().__init__('optical_flow')
+    super().__init__('horizon_detection')
     # self.declare_parameter('use_sim_time', True)
 
     # Convert raw ROS image to OpenCV type
@@ -41,7 +41,7 @@ class HorizonLine(Node):
     self.checkerboard_dims = (7,5) # Checkerboard Dimensions
 
     self.image_ready = True  # Flag to control image grabbing
-    self.timer = self.create_timer(5.0, self.enable_next_image)
+    self.timer = self.create_timer(1.0, self.enable_next_image)
 
   def enable_next_image(self):
     self.image_ready = True
@@ -123,7 +123,7 @@ class HorizonLine(Node):
 
         # Draw horizon line (vertical vanishing point)
         self.draw_horizontal_through_point(image_with_lines, vp_vertical)
-        
+        self.draw_line_through_points(image_with_lines, vp_vertical, vp_horizontal)
         
         resized_image = cv.resize(image_with_lines, (1280, 720), interpolation=cv.INTER_AREA) # Resize the image
         
@@ -181,6 +181,19 @@ class HorizonLine(Node):
         # Draw a horizontal line across the whole width
         start_point = (0, y)
         end_point = (w, y)
+
+        cv.line(image, start_point, end_point, color, thickness)
+
+  def draw_line_through_points(self, image, vp1, vp2, color=(255, 0, 255), thickness=5):
+        _, w = image.shape[:2]
+        x1 = int(vp1[0])
+        y1 = int(vp1[1])
+
+        x2 = int(vp2[0])
+        y2 = int(vp2[1])
+
+        start_point = (x1, y1)
+        end_point = (x2, y2)
 
         cv.line(image, start_point, end_point, color, thickness)
 
