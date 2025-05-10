@@ -85,6 +85,12 @@ install(DIRECTORY
   DESTINATION share/${PROJECT_NAME}/
   )
 
+  # Install gazebo model files
+install(DIRECTORY
+stop_sign_sample
+DESTINATION share/${PROJECT_NAME}/
+)
+
 ##############################
 # Create ROS2 package
 ##############################
