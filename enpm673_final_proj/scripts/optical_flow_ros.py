@@ -4,7 +4,7 @@ import numpy as np
 import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import Image
-from geometry_msgs.msg import TwistStamped
+from geometry_msgs.msg import Twist
 from cv_bridge import CvBridge
 
 class OpticalFlowTracker(Node):
@@ -12,10 +12,10 @@ class OpticalFlowTracker(Node):
     super().__init__('optical_flow')
 
     # Subscribe to camera topic
-    self._img_sub = self.create_subscription(Image, '/tb4_2/oakd/rgb/image_raw', self._OF_callback, 5)
+    self._img_sub = self.create_subscription(Image, '/camera/image_raw', self._OF_callback, 5)
     
     # Publish to command velocity topic
-    self._cmd_vel = self.create_publisher(TwistStamped,'/tb4_2/cmd_vel',10)
+    self._cmd_vel = self.create_publisher(Twist, '/cmd_vel', 10)
     
     # Initialize tracker
     self._tracker = cv.TrackerCSRT_create()
@@ -35,13 +35,13 @@ class OpticalFlowTracker(Node):
     self._stopped = False
 
     # Define the stop command
-    self._stop_cmd = TwistStamped()
-    self._stop_cmd.twist.linear.x = 0.0
-    self._stop_cmd.twist.linear.z = 0.0
+    self._stop_cmd = Twist()
+    self._stop_cmd.linear.x = 0.0
+    self._stop_cmd.linear.z = 0.0
     
     # Define the go command
-    self._go_cmd = TwistStamped()
-    self._go_cmd.twist.linear.z = 0.0
+    self._go_cmd = Twist()
+    self._go_cmd.linear.z = 0.0
     
     # Initialize region of interest (ROI) for obstacle detection
     self._roi = None
@@ -57,7 +57,7 @@ class OpticalFlowTracker(Node):
     ### Set the linear speed of the turtlebot ###
     # Going to slow may result in bad optical flow readings
     # Going too fast may result in the floor getting picked up (baseline average and search window should stop this)
-    self._go_cmd.twist.linear.x = 0.15
+    self._go_cmd.linear.x = 0.15
     
     ### Parameters for window of frame to look for obstacle ###
     # Make smaller for looking at a smaller window, larger for wider area
