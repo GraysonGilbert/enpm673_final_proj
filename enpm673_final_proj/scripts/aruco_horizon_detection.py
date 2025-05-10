@@ -18,7 +18,7 @@ class HorizonLine(Node):
     # Subscribe to camera topic
     self._img_sub = self.create_subscription(
         Image,
-        '/tb4_1/oakd/rgb/preview/image_raw',
+        '/tb4_2/oakd/rgb/preview/image_raw',
         self.horizon_callback,
         5)
     
