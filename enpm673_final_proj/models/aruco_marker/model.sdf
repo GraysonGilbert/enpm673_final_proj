@@ -19,7 +19,7 @@
         <pose>0.00005 0 0 0 0 0</pose>
         <geometry>
           <box>
-            <size>0.0001 0.10 0.10</size>
+            <size>0.00005 0.10 0.10</size> <!-- reducing from 0.0001 to 0.00005 to help prevent the robot from bouncing after driving on it -->
           </box>
         </geometry>
         <material>
@@ -39,6 +39,7 @@
           </box>
         </geometry>
       </visual>
+      <!-- removing collision to allow the robot to drive through markers and not bounce after driving on them
       <collision name="collision">
         <pose>0 0 0 0 0 0</pose>
         <geometry>
@@ -46,7 +47,7 @@
             <size>0.0001 0.10 0.10</size>
           </box>
         </geometry>
-      </collision>
+      </collision> -->
     </link>
   </model>
 </sdf>
