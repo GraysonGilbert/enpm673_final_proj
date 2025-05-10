@@ -15,10 +15,12 @@ class StopSignDetector(Node):
         super().__init__('Stop_Sign_Detector')
 
         # subscribe to camera image
-        self.subscription = self.create_subscription(Image,'/camera/image_raw',self.find_stop_sign,10)
+        # self.subscription = self.create_subscription(Image,'/camera/image_raw',self.find_stop_sign,10)
+        self.subscription = self.create_subscription(Image,'/tb4_2/oakd/rgb/image_raw',self.find_stop_sign,10)
         
         # publish to command velocity topic
-        self.cmd_vel = self.create_publisher(TwistStamped,'/cmd_vel',10)
+        # self.cmd_vel = self.create_publisher(TwistStamped,'/cmd_vel',10)
+        self.cmd_vel = self.create_publisher(TwistStamped,'/tb4_2/cmd_vel',10)
         
         #load in cascade classifier initialization
         cascade_path = os.path.join(get_package_share_directory('enpm673_final_proj'), 'stop_sign_sample','stop_data.xml')
