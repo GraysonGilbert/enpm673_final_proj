@@ -8,7 +8,7 @@ import cv2
 import time
 from rclpy.node import Node
 from nav_msgs.msg import Odometry
-from geometry_msgs.msg import Twist
+from geometry_msgs.msg import Twist, TwistStamped
 from transforms3d.euler import quat2euler
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge
@@ -84,6 +84,18 @@ class TB3ArUcoFollower(Node):
             10)
 
         # Subscribe to camera feed
+        # self.camera_sub = self.create_subscription(
+        #     Image,
+        #     '/camera/image_raw',
+        #     self.camera_callback,
+        #     camera_qos)
+        
+        # self.camera_info_sub = self.create_subscription(
+        #     CameraInfo,
+        #     '/camera/camera_info', # Make sure topic name matches Gazebo output
+        #     self.camera_info_callback,
+        #     10) # QoS profile can be simple for camera_info
+        # Camera Subscribers for turtlebot4
         self.camera_sub = self.create_subscription(
             Image,
             '/camera/image_raw',
@@ -190,9 +202,9 @@ class TB3ArUcoFollower(Node):
         self.search_mode_start_time = time.time()  # Start timing search mode
         
         # Force a complete stop before starting search
-        twist = Twist()
-        twist.linear.x = 0.0
-        twist.angular.z = 0.0
+        twist = TwistStamped()
+        twist.twist.linear.x = 0.0
+        twist.twist.angular.z = 0.0
         self.cmd_pub.publish(twist)
         
         self.sweep_done = False
@@ -398,16 +410,16 @@ class TB3ArUcoFollower(Node):
         self.follow_aruco_control(dt)
 
     def follow_aruco_control(self, dt):
-        twist = Twist()
+        twist = TwistStamped()
 
         self.get_logger().debug(f"Robot state: markers_completed={self.markers_completed}, " +
                             f"final_marker_reached={self.final_marker_reached}, " +
                             f"search_mode={self.search_mode}")
         if self.route_completed:
             # If we've completed the route, just stay stopped
-            twist = Twist()
-            twist.linear.x = 0.0
-            twist.angular.z = 0.0
+            twist = TwistStamped()
+            twist.twist.linear.x = 0.0
+            twist.twist.angular.z = 0.0
             self.cmd_pub.publish(twist)
             return
         # Handle startup phase
@@ -420,8 +432,8 @@ class TB3ArUcoFollower(Node):
                 self.startup_phase = False
                 self.get_logger().info("Exiting startup phase")
             else:
-                twist.linear.x = 0.08
-                twist.angular.z = 0.0
+                twist.twist.linear.x = 0.08
+                twist.twist.angular.z = 0.0
                 self.cmd_pub.publish(twist)
                 return
         
@@ -431,17 +443,17 @@ class TB3ArUcoFollower(Node):
             elapsed = time.time() - self.final_drive_start_time
             if elapsed < self.final_drive_duration:
                 # Continue driving forward in the exact direction when last marker was reached
-                twist.linear.x = 0.1
+                twist.twist.linear.x = 0.1
                 # Calculate angular error to maintain final orientation
                 ang_err = self._normalize_angle(self.final_marker_direction - self.current_yaw)
                 # Small correction to keep straight
-                twist.angular.z = self.kp_w * ang_err
+                twist.twist.angular.z = self.kp_w * ang_err
                 self.cmd_pub.publish(twist)
                 self.get_logger().info(f"Final drive: {elapsed:.1f}/{self.final_drive_duration:.1f} seconds")
             else:
                 # Stop after the duration
-                twist.linear.x = 0.0
-                twist.angular.z = 0.0
+                twist.twist.linear.x = 0.0
+                twist.twist.angular.z = 0.0
                 self.cmd_pub.publish(twist)
                 self.route_completed = True  # Mark the entire route as completed
                 self.get_logger().info("Final drive complete, stopping robot. Route completed!")
@@ -538,8 +550,8 @@ class TB3ArUcoFollower(Node):
                     self.get_logger().info("Reached max left turn, returning to center")
                 else:
                     # Continue turning left
-                    twist.linear.x = 0.0
-                    twist.angular.z = 0.5  # Positive for left turn
+                    twist.twist.linear.x = 0.0
+                    twist.twist.angular.z = 0.5  # Positive for left turn
                     self.cmd_pub.publish(twist)
                     
             elif self.search_state == "TURNING_CENTER":
@@ -552,8 +564,8 @@ class TB3ArUcoFollower(Node):
                     self.get_logger().info("Returned to center, starting right turn")
                 else:
                     # Continue returning to center
-                    twist.linear.x = 0.0
-                    twist.angular.z = -0.5 if center_angle_diff > 0 else 0.5  # Turn toward center
+                    twist.twist.linear.x = 0.0
+                    twist.twist.angular.z = -0.5 if center_angle_diff > 0 else 0.5  # Turn toward center
                     self.cmd_pub.publish(twist)
                     
             elif self.search_state == "TURNING_RIGHT":
@@ -566,8 +578,8 @@ class TB3ArUcoFollower(Node):
                     self.get_logger().info("Reached max right turn, returning to center")
                 else:
                     # Continue turning right
-                    twist.linear.x = 0.0
-                    twist.angular.z = -0.5  # Negative for right turn
+                    twist.twist.linear.x = 0.0
+                    twist.twist.angular.z = -0.5  # Negative for right turn
                     self.cmd_pub.publish(twist)
                     
             elif self.search_state == "TURNING_BACK":
@@ -581,8 +593,8 @@ class TB3ArUcoFollower(Node):
                     self.get_logger().info("Returned to center, moving forward for 2 seconds")
                 else:
                     # Continue returning to center
-                    twist.linear.x = 0.0
-                    twist.angular.z = -0.5 if center_angle_diff < 0 else 0.5  # Turn toward center
+                    twist.twist.linear.x = 0.0
+                    twist.twist.angular.z = -0.5 if center_angle_diff < 0 else 0.5  # Turn toward center
                     self.cmd_pub.publish(twist)
                     
             elif self.search_state == "MOVING_FORWARD":
@@ -590,14 +602,14 @@ class TB3ArUcoFollower(Node):
                 
                 if elapsed < self.forward_drive_duration:
                     # Continue moving forward
-                    twist.linear.x = 0.08
-                    twist.angular.z = 0.0
+                    twist.twist.linear.x = 0.08
+                    twist.twist.angular.z = 0.0
                     self.cmd_pub.publish(twist)
                     self.get_logger().info(f"Moving forward: {elapsed:.1f}/{self.forward_drive_duration:.1f} seconds")
                 else:
                     # Stop and prepare for next search cycle
-                    twist.linear.x = 0.0
-                    twist.angular.z = 0.0
+                    twist.twist.linear.x = 0.0
+                    twist.twist.angular.z = 0.0
                     self.cmd_pub.publish(twist)
                     self.search_state = "PAUSED"
                     self.create_pause_timer(1.0)  # Small pause before next cycle
@@ -605,8 +617,8 @@ class TB3ArUcoFollower(Node):
                     
             elif self.search_state == "PAUSED":
                 # Just wait until timer callback
-                twist.linear.x = 0.0
-                twist.angular.z = 0.0
+                twist.twist.linear.x = 0.0
+                twist.twist.angular.z = 0.0
                 self.cmd_pub.publish(twist)
                 
             # Always return after handling search mode to avoid other movement logic
@@ -615,8 +627,8 @@ class TB3ArUcoFollower(Node):
         # If no markers detected, move forward slowly to look
         if not self.marker_detected and (not hasattr(self, 'marker_queue') or not self.marker_queue):
             self.get_logger().info("NO ARUCO MARKERS DETECTED YET, MOVING SLOW TO LOOK")
-            twist.linear.x = 0.05
-            twist.angular.z = 0.0
+            twist.twist.linear.x = 0.05
+            twist.twist.angular.z = 0.0
             self.cmd_pub.publish(twist)
             
             if (not self.first_marker_seen):
@@ -683,8 +695,8 @@ class TB3ArUcoFollower(Node):
         angular_cmd = max(-self.max_w, min(self.max_w, angular_cmd))
         
         # Set twist commands
-        twist.linear.x = linear_cmd
-        twist.angular.z = angular_cmd
+        twist.twist.linear.x = linear_cmd
+        twist.twist.angular.z = angular_cmd
         
         # Publish command
         self.cmd_pub.publish(twist)
