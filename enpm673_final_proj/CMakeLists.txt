@@ -45,6 +45,7 @@ install(PROGRAMS
   scripts/object_detection_stop_sign.py
   scripts/optical_flow.py
   scripts/aruco_navigator.py
+  scripts/object_detection_stop_sign_1.py
   DESTINATION lib/${PROJECT_NAME}
   )
 
