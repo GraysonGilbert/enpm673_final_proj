@@ -9,19 +9,12 @@ from cv_bridge import CvBridge
 
 class HorizonLine(Node):
   def __init__(self):
-    super().__init__('horizon_detection')
+    super().__init__('aruco_horizon_detection')
     # self.declare_parameter('use_sim_time', True)
 
     # Convert raw ROS image to OpenCV type
     self._bridge = CvBridge()
 
-    # # Subscribe to camera topic
-    # self._img_sub = self.create_subscription(
-    #     Image,
-    #     '/camera/image_raw',
-    #     self.horizon_callback,
-    #     5)
-    
     # Subscribe to camera topic
     self._img_sub = self.create_subscription(
         Image,
@@ -33,7 +26,7 @@ class HorizonLine(Node):
     # # Subscribe to camera topic (Turtlebot4)
     # self._img_sub = self.create_subscription(
     #     Image,
-    #     '/camera/image_raw',
+    #     '/tb4_1/oakd/rgb/preview/image_raw'
     #     self.horizon_callback,
     #     5)
 
@@ -45,7 +38,7 @@ class HorizonLine(Node):
         10
     )
     
-    self.checkerboard_dims = (7,5) # Checkerboard Dimensions
+    #self.checkerboard_dims = (7,5) # Checkerboard Dimensions
 
     self.image_ready = True  # Flag to control image grabbing
     self.timer = self.create_timer(1.0, self.enable_next_image)
@@ -68,42 +61,70 @@ class HorizonLine(Node):
     gray = cv.cvtColor(cv_image, cv.COLOR_BGR2GRAY) # Greyscale image
 
     # Detect and log checkerboard corners found
-    ret, corners = cv.findChessboardCorners(gray, self.checkerboard_dims, None)
-    self.get_logger().info(f"findChessboardCorners returned: ret={ret}, number_of_corners={len(corners) if corners is not None else 0}")
+    #ret, corners = cv.findChessboardCorners(gray, self.checkerboard_dims, None)
+    #self.get_logger().info(f"findChessboardCorners returned: ret={ret}, number_of_corners={len(corners) if corners is not None else 0}")
 
-    if ret:
-        print(f"Checkerboard detected with {len(corners)} points!")
+    #_____________________________________
 
-        # Refine corner locations
-        criteria = (cv.TERM_CRITERIA_EPS + cv.TERM_CRITERIA_MAX_ITER, 30, 0.001)
-        corners = cv.cornerSubPix(gray, corners, (11, 11), (-1, -1), criteria)
 
-        corners = corners.reshape(self.checkerboard_dims[1], self.checkerboard_dims[0], 2) # Reshape for easier indexing: shape (rows, columns, 2)
+    # ArUco detection setup
+    aruco_dict = cv.aruco.getPredefinedDictionary(cv.aruco.DICT_4X4_50)
+    parameters = cv.aruco.DetectorParameters()
+    detector = cv.aruco.ArucoDetector(aruco_dict, parameters)
 
-        image_with_lines = cv_image.copy() # Make a copy for drawing
+    # Detect markers
+    corners, ids, _ = detector.detectMarkers(gray)
 
-        # Pick first and last rows of checkerboard
-        row1_pts = (corners[0, 0], corners[0, -1])        # First row: first and last corner
-        row2_pts = (corners[-1, 0], corners[-1, -1])       # Last row: first and last corner
+    if ids is not None and len(corners) > 0:
+        aruco_corners = corners[0][0]  # shape: (4, 2)
+        print("First marker ID:", ids[0][0])
+        print("First marker corners:")
 
-        # Compute the lines
-        line1 = self.compute_line_equation(*row1_pts)
-        line2 = self.compute_line_equation(*row2_pts)
+        for i, corner in enumerate(aruco_corners):
+            print(f"Corner {i}: x = {corner[0]:.2f}, y = {corner[1]:.2f}")
+            x, y = int(corner[0]), int(corner[1])
+            cv.circle(cv_image, (x, y), 5, (0, 255, 0), -1)
+            cv.putText(cv_image, str(i), (x + 5, y - 5), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 1)
 
-        # Compute their intersection (homogeneous coordinates)
-        vp_horizontal = np.cross(line1, line2)
-        vp_horizontal = vp_horizontal / vp_horizontal[2]  # Normalize to (x, y, 1)
+        # Example: draw a line between corners 0 and 2, and extend it
+        pt0 = aruco_corners[0]
+        pt1 = aruco_corners[1]
+        pt2 = aruco_corners[2]
+        pt3 = aruco_corners[3]
 
-        print(f"Vanishing point (horizontal lines): {vp_horizontal}")
+        #vertical points
+        self.draw_extended_line(cv_image, pt0, pt1)
+        self.draw_extended_line(cv_image, pt2, pt3)
+
+        #horizontal points
+        self.draw_extended_line(cv_image, pt1, pt2)
+        self.draw_extended_line(cv_image, pt0, pt3)
 
 
         # Pick first and last columns of the checkerboard
-        col1_pts = (corners[0, 0], corners[-1, 0])       # First column: top and bottom
-        col2_pts = (corners[0, -1], corners[-1, -1])      # Last column: top and bottom
+        horz1_pts = (pt0, pt1)       # First column: top and bottom
+        horz2_pts = (pt2, pt3)      # Last column: top and bottom
 
         # Compute the lines
-        line3 = self.compute_line_equation(*col1_pts)
-        line4 = self.compute_line_equation(*col2_pts)
+        line1 = self.compute_line_equation(*horz1_pts)
+        line2 = self.compute_line_equation(*horz2_pts)
+
+        # Compute their intersection (homogeneous coordinates)
+        vp_horz = np.cross(line1, line2)
+        vp_horz = vp_horz / vp_horz[2]  # Normalize to (x, y, 1)
+
+        # vp is now the **vanishing point** for horizontal lines
+        print(f"Vanishing point (horizontal lines): {vp_horz}")
+
+            # Pick first and last columns of the checkerboard
+
+        vert1_pts = (pt0, pt1)       # First column: top and bottom
+        vert2_pts = (pt2, pt3)      # Last column: top and bottom
+
+        # Compute the lines
+        line3 = self.compute_line_equation(*vert1_pts)
+        line4 = self.compute_line_equation(*vert2_pts)
+
 
         # Compute their intersection (homogeneous coordinates)
         vp_vertical = np.cross(line3, line4)
@@ -111,28 +132,16 @@ class HorizonLine(Node):
 
         print(f"Vanishing point (vertical lines): {vp_vertical}")
 
-        # 2 horizontal lines (rows)
-        rows_to_draw = [0, self.checkerboard_dims[1]-1]  # first and last row
-        for row in rows_to_draw:
-            pt1 = corners[row, 0]
-            pt2 = corners[row, -1]
-            self.draw_extended_line(image_with_lines, pt1, pt2, color=(0, 255, 0), thickness=5)  # green for rows
+        print(line3)
 
-        # 2 vertical lines (columns)
-        cols_to_draw = [0, self.checkerboard_dims[0]-1] 
-        for col in cols_to_draw:
-            pt1 = corners[0, col]
-            pt2 = corners[-1, col]
-            self.draw_extended_line(image_with_lines, pt1, pt2, color=(255, 0, 0), thickness=5)  # blue for columns
 
-        # # Draw horizon line (horizontal vanishing point)
-        # self.draw_horizontal_through_point(image_with_lines, vp_horizontal)
+        self.draw_horizontal_through_point(cv_image, vp_vertical)
+        self.draw_line_through_points(cv_image, vp_vertical, vp_horz)
 
-        # Draw horizon line (vertical vanishing point)
-        self.draw_horizontal_through_point(image_with_lines, vp_vertical)
-        self.draw_line_through_points(image_with_lines, vp_vertical, vp_horizontal)
+    #___________________________________
+
         
-        resized_image = cv.resize(image_with_lines, (1280, 720), interpolation=cv.INTER_AREA) # Resize the image
+        resized_image = cv.resize(cv_image, (1280, 720), interpolation=cv.INTER_AREA) # Resize the image
         
         processed_msg = self._bridge.cv2_to_imgmsg(resized_image, encoding="rgb8") # Convert the processed OpenCV image back to ROS Image message
         
@@ -140,7 +149,7 @@ class HorizonLine(Node):
 
         # Display the processed image in a window
         cv.namedWindow("Processed Camera Feed", cv.WINDOW_NORMAL)
-        cv.imshow("Processed Camera Feed", image_with_lines)
+        cv.imshow("Processed Camera Feed", cv_image)
         cv.imwrite("screenshots/horizon_line_output.jpg", resized_image)
         cv.waitKey(1)
         
