@@ -44,7 +44,7 @@ class StopSignDetector(Node):
         stop_sign_found = self.cascade_stop_sign.detectMultiScale(frame_gray, minSize=(10,10))
         #conditions to stop or drive
         stop_cmd = TwistStamped()
-        print("variable activation: ", stop_sign_found)
+        # print("variable activation: ", stop_sign_found)
         
         if len(stop_sign_found) == 0:
             #Initially move foward at .1 m/s if no stop sign is there
@@ -62,15 +62,18 @@ class StopSignDetector(Node):
             stop_cmd.twist.angular.z = 0.0
             self.cmd_vel.publish(stop_cmd)
             print("---STOP SIGN DETECTED---")
+            print("Stop Sign Bounding Box Location: ", stop_sign_found)
             print("***TURTLE BOT STOPPING***")
             print()
             x = stop_sign_found[0][0]
             y = stop_sign_found[0][1]
             w = stop_sign_found[0][2]
             h = stop_sign_found[0][3]
+            
+            #Drawing the box for image display
             # if self.first_image_activate ==1:
             # if stop sign is found draw box around detected stop sign and display
-            cv.rectangle(convert_image, (x,y), (x+w,y+h), (255,0,0),3)
+            # cv.rectangle(convert_image, (x,y), (x+w,y+h), (255,0,0),3)
             #Display Image with Stop sign identified
             # if not self.window_created:
             #     cv.namedWindow("frames", cv.WINDOW_NORMAL) 
@@ -79,6 +82,9 @@ class StopSignDetector(Node):
             #     self.window_created = True        
             # cv.imshow("frames",convert_image)
             # cv.waitKey(1)
+            
+            #shut down node once a stop sign is detected
+            rclpy.shutdown()
 
 def main(args=None):
     rclpy.init(args=args)

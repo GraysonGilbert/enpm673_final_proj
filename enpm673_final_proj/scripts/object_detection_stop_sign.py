@@ -5,7 +5,7 @@ from matplotlib import pyplot as plt
 import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import Image
-from geometry_msgs.msg import Twist, TwistStamped
+from geometry_msgs.msg import Twist
 from cv_bridge import CvBridge
 from ament_index_python.packages import get_package_share_directory
 import os
@@ -18,7 +18,7 @@ class StopSignDetector(Node):
         self.subscription = self.create_subscription(Image,'/camera/image_raw',self.find_stop_sign,10)
         
         # publish to command velocity topic
-        self.cmd_vel = self.create_publisher(TwistStamped,'/cmd_vel',10)
+        self.cmd_vel = self.create_publisher(Twist,'/cmd_vel',10)
         
         #load in cascade classifier initialization
         cascade_path = os.path.join(get_package_share_directory('enpm673_final_proj'), 'stop_sign_sample','stop_data.xml')
@@ -41,13 +41,13 @@ class StopSignDetector(Node):
         # Run Haar Cascade over image to find stop sign
         stop_sign_found = self.cascade_stop_sign.detectMultiScale(frame_gray, minSize=(10,10))
         #conditions to stop or drive
-        stop_cmd = TwistStamped()
+        stop_cmd = Twist()
         print("variable activation: ", stop_sign_found)
         
         if len(stop_sign_found) == 0:
             #Initially move foward at .1 m/s if no stop sign is there
-            stop_cmd.twist.linear.x = 0.1
-            stop_cmd.twist.angular.z = 0.0
+            stop_cmd.linear.x = 0.1
+            stop_cmd.angular.z = 0.0
             self.cmd_vel.publish(stop_cmd)
             print("***TURTLE BOT MOVING***")
             print()
@@ -56,8 +56,8 @@ class StopSignDetector(Node):
         elif len(stop_sign_found) > 0:
             #stop sign is seen so turtle bot will stop
             # self.first_image_activate += 1
-            stop_cmd.twist.linear.x = 0.0
-            stop_cmd.twist.angular.z = 0.0
+            stop_cmd.linear.x = 0.0
+            stop_cmd.angular.z = 0.0
             self.cmd_vel.publish(stop_cmd)
             print("---STOP SIGN DETECTED---")
             print("***TURTLE BOT STOPPING***")
@@ -77,7 +77,11 @@ class StopSignDetector(Node):
             #     self.window_created = True        
             # cv.imshow("frames",convert_image)
             # cv.waitKey(1)
-
+            
+            #Uncomment if you want node to stop after stop sign detections
+            # rclpy.shutdown()
+            
+            
 def main(args=None):
     rclpy.init(args=args)
     node = StopSignDetector()
